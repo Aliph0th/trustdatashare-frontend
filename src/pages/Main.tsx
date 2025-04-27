@@ -1,5 +1,16 @@
+import { FloatingLabelInput } from '@/components/ui/FloatingInput';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+
 const main = () => {
-   return <h1 className="text-5xl flex justify-center items-center grow">Home page</h1>;
+   return (
+      <form className="grid grid-cols-[3fr_1fr] grid-rows-[auto_1fr] gap-5 h-full">
+         <FloatingLabelInput label="Title" />
+         <Button type="submit">Submit</Button>
+         <Textarea placeholder="Content" className="row-start-2 h-full resize-none" />
+         <Textarea placeholder="Description" className="row-start-2 h-fit" />
+      </form>
+   );
 };
 
 export default main;

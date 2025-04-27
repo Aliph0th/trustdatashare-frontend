@@ -6,7 +6,7 @@ const Wrapper = () => {
    return (
       <div className="h-screen flex flex-col">
          <Header />
-         <main className="flex-1 px-7 flex flex-col">
+         <main className="flex-1 px-5 py-5 flex flex-col">
             <Outlet />
          </main>
          <Footer />
