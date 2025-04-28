@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import axios, { AxiosError } from 'axios';
-import { signupSchema } from '../validation';
+import { loginSchema, signupSchema } from '../validation';
 import { User } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -16,6 +16,17 @@ export const REQUESTS = {
    SIGN_UP: async ({ data }: { data: z.infer<typeof signupSchema> }) => {
       try {
          const response = await API.post<User>('/auth/register', data);
+         return response.data;
+      } catch (error) {
+         if (error instanceof AxiosError) {
+            throw new Error(error?.response?.data?.message);
+         }
+         return null;
+      }
+   },
+   LOGIN: async ({ data }: { data: z.infer<typeof loginSchema> }) => {
+      try {
+         const response = await API.post<User>('/auth/login', data);
          return response.data;
       } catch (error) {
          if (error instanceof AxiosError) {
