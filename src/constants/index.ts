@@ -64,3 +64,7 @@ export const EXPIRATION_OPTIONS = [
       title: '1 year'
    }
 ];
+
+export const QUERY_KEYS = {
+   USER: 'user'
+};

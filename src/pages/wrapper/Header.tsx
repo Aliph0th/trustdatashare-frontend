@@ -8,10 +8,16 @@ const Header = () => {
                <NavLink to="/">Trust Data Share</NavLink>
             </h2>
             <div className="flex gap-2">
-               <NavLink to="/login" className="hover:underline text-blue-800">
+               <NavLink
+                  to="/login"
+                  className={({ isActive }) => `${isActive ? 'text-black font-bold' : 'text-blue-800 hover:underline'}`}
+               >
                   Login
                </NavLink>
-               <NavLink to="/signup" className="hover:underline text-blue-800">
+               <NavLink
+                  to="/signup"
+                  className={({ isActive }) => `${isActive ? 'text-black font-bold' : 'text-blue-800 hover:underline'}`}
+               >
                   Sign up
                </NavLink>
             </div>

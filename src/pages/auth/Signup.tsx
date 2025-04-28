@@ -1,0 +1,110 @@
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import { REQUESTS } from '../../api';
+import { useUser } from '../../hooks/useUser';
+import { signupSchema } from '../../validation';
+
+const Signup = () => {
+   const { setUser } = useUser();
+   const form = useForm<z.infer<typeof signupSchema>>({
+      resolver: zodResolver(signupSchema),
+      defaultValues: {
+         username: '',
+         email: '',
+         password: '',
+         repeatedPassword: ''
+      }
+   });
+
+   const mutation = useMutation({
+      mutationFn: REQUESTS.SIGN_UP,
+      onError(error: Error) {
+         toast.error(error.message);
+      },
+      onSuccess(data) {
+         if (!data) {
+            toast.error('Failed to register');
+            return;
+         }
+         setUser(data);
+      }
+   });
+
+   function onSubmit(data: z.infer<typeof signupSchema>) {
+      mutation.mutate({ data });
+   }
+
+   return (
+      <Form {...form}>
+         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 h-full">
+            <FormField
+               control={form.control}
+               name="username"
+               render={({ field }) => (
+                  <FormItem className="w-4/12">
+                     <FormLabel required>Username</FormLabel>
+                     <FormControl>
+                        <Input placeholder="John Smith" {...field} />
+                     </FormControl>
+                     <FormMessage />
+                  </FormItem>
+               )}
+            />
+            <FormField
+               control={form.control}
+               name="email"
+               render={({ field }) => (
+                  <FormItem className="w-4/12">
+                     <FormLabel required>Email</FormLabel>
+                     <FormControl>
+                        <Input placeholder="example@gmail.com" {...field} />
+                     </FormControl>
+                     <FormDescription>We'll send a verification code to it</FormDescription>
+                     <FormMessage />
+                  </FormItem>
+               )}
+            />
+            <FormField
+               control={form.control}
+               name="password"
+               render={({ field }) => (
+                  <FormItem className="w-4/12">
+                     <FormLabel required>Password</FormLabel>
+                     <FormControl>
+                        <Input type="password" {...field} />
+                     </FormControl>
+                     <FormDescription>Password should contain at least 8 characters</FormDescription>
+                     <FormMessage />
+                  </FormItem>
+               )}
+            />
+            <FormField
+               control={form.control}
+               name="repeatedPassword"
+               render={({ field }) => (
+                  <FormItem className="w-4/12">
+                     <FormLabel required>Repeat password</FormLabel>
+                     <FormControl>
+                        <Input type="password" {...field} />
+                     </FormControl>
+                     <FormMessage />
+                  </FormItem>
+               )}
+            />
+            <Button type="submit" className="w-4/12" disabled={mutation.isPending}>
+               {mutation.isPending && <Loader2 className="animate-spin" />}
+               Sign up
+            </Button>
+         </form>
+      </Form>
+   );
+};
+
+export default Signup;
