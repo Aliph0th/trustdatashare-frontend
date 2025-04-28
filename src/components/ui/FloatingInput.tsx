@@ -3,21 +3,14 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from './textarea';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
-export interface TextareaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {}
 
 const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => {
    return <Input placeholder=" " className={cn('peer', className)} ref={ref} {...props} />;
 });
 
-const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(({ className, ...props }, ref) => {
-   return <Textarea placeholder=" " className={cn('peer', className)} ref={ref} {...props} />;
-});
-
 FloatingInput.displayName = 'FloatingInput';
-FloatingTextarea.displayName = 'FloatingTextarea';
 
 const FloatingLabel = React.forwardRef<React.ElementRef<typeof Label>, React.ComponentPropsWithoutRef<typeof Label>>(
    ({ className, ...props }, ref) => {
@@ -36,7 +29,6 @@ const FloatingLabel = React.forwardRef<React.ElementRef<typeof Label>, React.Com
 FloatingLabel.displayName = 'FloatingLabel';
 
 type FloatingLabelInputProps = InputProps & { label?: string };
-type FloatingTextareaInputProps = TextareaProps & { label?: string };
 
 const FloatingLabelInput = React.forwardRef<
    React.ElementRef<typeof FloatingInput>,
@@ -51,17 +43,4 @@ const FloatingLabelInput = React.forwardRef<
 });
 FloatingLabelInput.displayName = 'FloatingLabelInput';
 
-const FloatingTextareaInput = React.forwardRef<
-   React.ElementRef<typeof FloatingTextarea>,
-   React.PropsWithoutRef<FloatingTextareaInputProps>
->(({ id, label, className, ...props }, ref) => {
-   return (
-      <div className={`relative h-fit ${className}`}>
-         <FloatingTextarea ref={ref} id={id} {...props} />
-         <FloatingLabel htmlFor={id}>{label}</FloatingLabel>
-      </div>
-   );
-});
-FloatingTextareaInput.displayName = 'FloatingTextareaInput';
-
-export { FloatingInput, FloatingLabel, FloatingLabelInput, FloatingTextareaInput };
+export { FloatingInput, FloatingLabel, FloatingLabelInput };

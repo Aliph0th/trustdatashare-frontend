@@ -1,0 +1,29 @@
+import { z } from 'zod';
+
+export const createDataSchema = z.object({
+   content: z
+      .string()
+      .min(1, 'Content must be at least 1 character.')
+      .max(6291456, 'Content must be a maximum 6291456 characters long.'),
+   title: z
+      .string()
+      .min(1, 'Title must be at least 1 character.')
+      .max(20, 'Title must be a maximum 20 characters long.')
+      .optional()
+      .or(z.literal('')),
+   description: z
+      .string()
+      .min(1, 'Description must be at least 1 character.')
+      .max(500, 'Description must be a maximum 500 characters long.')
+      .optional()
+      .or(z.literal('')),
+   hideOwner: z.boolean().optional(),
+   password: z.string().min(5, 'Password must be at least 5 characters.').optional().or(z.literal('')),
+   ttl: z.coerce
+      .number()
+      .int()
+      .gte(-1)
+      .refine(x => x !== 0, 'ttl cannot be 0')
+      .optional()
+      .or(z.literal(-1))
+});
