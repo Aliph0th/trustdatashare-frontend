@@ -7,7 +7,7 @@ interface ErrorProps {
    text?: string;
 }
 
-const Error: FC<ErrorProps> = ({ allowedHome = true, text }) => {
+const Error: FC<ErrorProps> = ({ allowedHome = true, text = 'Some error occurred' }) => {
    return (
       <div className="flex justify-center items-center h-full flex-col">
          <CircleX size={130} className="text-red-600" />

@@ -68,3 +68,5 @@ export const EXPIRATION_OPTIONS = [
 export const QUERY_KEYS = {
    USER: 'user'
 };
+
+export const MAX_GUEST_EXPIRATION = 24 * 3600;
