@@ -11,9 +11,28 @@ import { NavLink } from 'react-router-dom';
 import { titleInitials } from '../../lib/utils';
 import { useUser } from '../../hooks/useUser';
 import { Button } from '@/components/ui/button';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { REQUESTS } from '../../api';
+import { LogOut } from 'lucide-react';
 
 const HeaderAccount = () => {
-   const { user } = useUser();
+   const { user, setUser } = useUser();
+
+   const mutation = useMutation({
+      mutationFn: REQUESTS.LOGOUT,
+      onError(error: Error) {
+         toast.error(error.message);
+      },
+      onSuccess() {
+         setUser(null);
+         toast('Logged out', { icon: <LogOut size={20} /> });
+      }
+   });
+
+   const handleLogout = () => {
+      mutation.mutate();
+   };
 
    return (
       <>
@@ -31,6 +50,16 @@ const HeaderAccount = () => {
                   <DropdownMenuContent side="bottom" align="end">
                      <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
                      <DropdownMenuSeparator />
+                     {!user?.isEmailVerified && (
+                        <>
+                           <DropdownMenuItem className="bg-yellow-400 hover:bg-yellow-500">
+                              <NavLink to="/verify" className="w-full">
+                                 Verify email
+                              </NavLink>
+                           </DropdownMenuItem>
+                           <DropdownMenuSeparator />
+                        </>
+                     )}
                      <DropdownMenuItem>
                         <NavLink to="/profile" className="w-full">
                            My posts
@@ -42,8 +71,13 @@ const HeaderAccount = () => {
                         </NavLink>
                      </DropdownMenuItem>
                      <DropdownMenuSeparator />
-                     <DropdownMenuItem>
-                        <Button variant="destructive" size="sm" className="w-full">
+                     <DropdownMenuItem className="p-0">
+                        <Button
+                           onClick={handleLogout}
+                           variant="destructive"
+                           size="sm"
+                           className="w-full hover:bg-red-700"
+                        >
                            Logout
                         </Button>
                      </DropdownMenuItem>

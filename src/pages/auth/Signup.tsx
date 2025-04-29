@@ -10,9 +10,11 @@ import { z } from 'zod';
 import { REQUESTS } from '../../api';
 import { useUser } from '../../hooks/useUser';
 import { signupSchema } from '../../validation';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
    const { setUser } = useUser();
+   const navigate = useNavigate();
    const form = useForm<z.infer<typeof signupSchema>>({
       resolver: zodResolver(signupSchema),
       defaultValues: {
@@ -34,6 +36,8 @@ const Signup = () => {
             return;
          }
          setUser(data);
+         toast.success('Successfully registered. Verify your email now');
+         navigate('/verify', { replace: true });
       }
    });
 

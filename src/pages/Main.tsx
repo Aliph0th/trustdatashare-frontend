@@ -15,7 +15,7 @@ import { CircleHelp, Loader2 } from 'lucide-react';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 const Main = () => {
-   const { user, isLoading } = useUser();
+   const { user, isUserLoading } = useUser();
    const form = useForm<z.infer<typeof createDataSchema>>({
       resolver: zodResolver(createDataSchema),
       defaultValues: {
@@ -28,7 +28,7 @@ const Main = () => {
       console.log(values);
    }
 
-   if (isLoading) {
+   if (isUserLoading) {
       return (
          <div className="h-full flex items-center justify-center">
             <Loader2 size={30} className="animate-spin" />
