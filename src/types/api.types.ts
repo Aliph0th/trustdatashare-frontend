@@ -37,3 +37,20 @@ export type SessionMetadata = {
    device: DeviceData;
    ip: string;
 };
+
+export type Data = {
+   id: string;
+   content?: string;
+   ttl: number;
+   title?: string;
+   description?: string;
+   createdAt: Date;
+   updatedAt: Date;
+   isPublic?: boolean;
+   isOwnerHidden?: boolean;
+   owner?: {
+      id: number;
+      username: string;
+      isPremium: boolean;
+   };
+};

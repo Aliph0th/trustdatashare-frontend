@@ -29,6 +29,7 @@ const Verify = () => {
       },
       onSuccess() {
          setUser({ ...user!, isEmailVerified: true });
+         toast.success('Email is verified');
       }
    });
 

@@ -10,9 +10,9 @@ interface IAuthWrapperProps {
 }
 
 const AuthWrapper: FC<IAuthWrapperProps> = ({ children, to, isAuthRequired = false }) => {
-   const { user, isLoading } = useUser();
+   const { user, isUserLoading } = useUser();
 
-   if (isLoading) {
+   if (isUserLoading) {
       return (
          <div className="h-full flex items-center justify-center">
             <Loader2 size={30} className="animate-spin" />

@@ -26,11 +26,19 @@ const router = createBrowserRouter([
                   index: true
                },
                {
-                  element: <Signup />,
+                  element: (
+                     <AuthWrapper to="/">
+                        <Signup />
+                     </AuthWrapper>
+                  ),
                   path: 'signup'
                },
                {
-                  element: <Login />,
+                  element: (
+                     <AuthWrapper to="/">
+                        <Login />
+                     </AuthWrapper>
+                  ),
                   path: 'login'
                },
                {

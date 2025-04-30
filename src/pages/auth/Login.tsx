@@ -10,8 +10,10 @@ import { z } from 'zod';
 import { REQUESTS } from '../../api';
 import { useUser } from '../../hooks/useUser';
 import { loginSchema } from '../../validation';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+   const navigate = useNavigate();
    const { setUser } = useUser();
    const form = useForm<z.infer<typeof loginSchema>>({
       resolver: zodResolver(loginSchema),
@@ -32,6 +34,7 @@ const Login = () => {
             return;
          }
          setUser(data);
+         navigate('/', { replace: true });
       }
    });
 

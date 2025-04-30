@@ -52,7 +52,7 @@ const HeaderAccount = () => {
                      <DropdownMenuSeparator />
                      {!user?.isEmailVerified && (
                         <>
-                           <DropdownMenuItem className="bg-yellow-400 hover:bg-yellow-500">
+                           <DropdownMenuItem className="bg-yellow-400 hover:bg-yellow-500!">
                               <NavLink to="/verify" className="w-full">
                                  Verify email
                               </NavLink>
