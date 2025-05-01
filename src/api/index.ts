@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { createDataSchema, loginSchema, signupSchema, verifySchema } from '../validation';
+import { createDataSchema, loginSchema, patchUserSchema, signupSchema, verifySchema } from '../validation';
 import { Data, User } from '../types';
 import { ApiException } from '../exceptions';
 
@@ -55,5 +55,8 @@ export const REQUESTS = {
    },
    MYSELF: async () => {
       return apiCall(() => API.get<User>('/users/me'));
+   },
+   PATCH_USER: async ({ data }: { data: z.infer<typeof patchUserSchema> }) => {
+      return apiCall(() => API.patch<Omit<User, 'sessions'>>('/users/me', data));
    }
 };

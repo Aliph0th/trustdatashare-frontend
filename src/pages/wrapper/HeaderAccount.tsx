@@ -53,7 +53,7 @@ const HeaderAccount = () => {
                      <DropdownMenuSeparator />
                      {!user?.isEmailVerified && (
                         <>
-                           <DropdownMenuItem className="bg-yellow-400 hover:bg-yellow-500!">
+                           <DropdownMenuItem asChild className="bg-yellow-400 hover:bg-yellow-500!">
                               <NavLink to="/verify" className="w-full">
                                  Verify email
                               </NavLink>
@@ -61,13 +61,13 @@ const HeaderAccount = () => {
                            <DropdownMenuSeparator />
                         </>
                      )}
-                     <DropdownMenuItem>
-                        <NavLink to="/profile" className="w-full">
+                     <DropdownMenuItem asChild>
+                        <NavLink to="/profile" className={({ isActive }) => `${isActive ? 'font-bold' : ''} w-full`}>
                            My posts
                         </NavLink>
                      </DropdownMenuItem>
-                     <DropdownMenuItem>
-                        <NavLink to="/settings" className="w-full">
+                     <DropdownMenuItem asChild>
+                        <NavLink to="/settings" className={({ isActive }) => `${isActive ? 'font-bold' : ''} w-full`}>
                            Settings
                         </NavLink>
                      </DropdownMenuItem>

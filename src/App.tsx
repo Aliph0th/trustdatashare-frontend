@@ -13,6 +13,7 @@ import { REQUESTS } from './api';
 import { useEffect } from 'react';
 import { useUser } from './hooks/useUser';
 import Post from './pages/Post';
+import Settings from './pages/settings/Settings';
 
 const router = createBrowserRouter([
    {
@@ -53,6 +54,14 @@ const router = createBrowserRouter([
                      </AuthWrapper>
                   ),
                   path: 'verify/:token?'
+               },
+               {
+                  element: (
+                     <AuthWrapper to="/login" isAuthRequired>
+                        <Settings />
+                     </AuthWrapper>
+                  ),
+                  path: 'settings'
                },
                {
                   path: '*',
