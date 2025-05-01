@@ -12,6 +12,7 @@ import { QUERY_KEYS } from './constants';
 import { REQUESTS } from './api';
 import { useEffect } from 'react';
 import { useUser } from './hooks/useUser';
+import Post from './pages/Post';
 
 const router = createBrowserRouter([
    {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
                      </AuthWrapper>
                   ),
                   path: 'signup'
+               },
+               {
+                  element: <Post />,
+                  path: 'post/:id'
                },
                {
                   element: (

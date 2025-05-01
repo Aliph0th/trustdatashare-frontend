@@ -1,31 +1,70 @@
 import { Button } from '@/components/ui/button';
-import { FloatingLabelInput } from '@/components/ui/FloatingInput';
-import { Textarea } from '@/components/ui/textarea';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { createDataSchema } from '../validation/create-data.schema';
-import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
+import { FloatingLabelInput } from '@/components/ui/FloatingInput';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { CircleHelp, Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import { REQUESTS } from '../api';
 import { EXPIRATION_OPTIONS, MAX_GUEST_EXPIRATION } from '../constants';
 import { useUser } from '../hooks/useUser';
-import { CircleHelp, Loader2 } from 'lucide-react';
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { createDataSchema } from '../validation/create-data.schema';
+import CopyToClipboard from '../components/CopyToClipboard';
+import { ApiException } from '../exceptions';
 
 const Main = () => {
+   const navigate = useNavigate();
    const { user, isUserLoading } = useUser();
    const form = useForm<z.infer<typeof createDataSchema>>({
       resolver: zodResolver(createDataSchema),
       defaultValues: {
          content: '',
-         hideOwner: false
+         title: '',
+         password: ''
       }
    });
 
-   function onSubmit(values: z.infer<typeof createDataSchema>) {
-      console.log(values);
+   const mutation = useMutation({
+      mutationFn: REQUESTS.CREATE_POST,
+      onError(error: ApiException) {
+         toast.error(error.message);
+      },
+      onSuccess(data) {
+         if (!data) {
+            toast.error('Failed to create post');
+            return;
+         }
+         toast.success('Post was created successfully', {
+            action: (
+               <div className="flex items-center gap-2">
+                  <Button
+                     variant="outline"
+                     size="sm"
+                     className="text-sm text-black"
+                     onClick={() => navigate(`/post/${data.id}`)}
+                  >
+                     View
+                  </Button>
+                  <CopyToClipboard text={`${window.location.origin}/post/${data.id}`} />
+               </div>
+            ),
+            classNames: {
+               content: 'grow'
+            }
+         });
+      }
+   });
+
+   function onSubmit(data: z.infer<typeof createDataSchema>) {
+      mutation.mutate({ data });
    }
 
    if (isUserLoading) {
@@ -53,7 +92,10 @@ const Main = () => {
                   </FormItem>
                )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={mutation.isPending}>
+               {mutation.isPending && <Loader2 className="animate-spin" />}
+               Submit
+            </Button>
             <FormField
                control={form.control}
                name="content"

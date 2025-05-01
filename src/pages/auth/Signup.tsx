@@ -11,6 +11,7 @@ import { REQUESTS } from '../../api';
 import { useUser } from '../../hooks/useUser';
 import { signupSchema } from '../../validation';
 import { useNavigate } from 'react-router-dom';
+import { ApiException } from '../../exceptions';
 
 const Signup = () => {
    const { setUser } = useUser();
@@ -27,7 +28,7 @@ const Signup = () => {
 
    const mutation = useMutation({
       mutationFn: REQUESTS.SIGN_UP,
-      onError(error: Error) {
+      onError(error: ApiException) {
          toast.error(error.message);
       },
       onSuccess(data) {

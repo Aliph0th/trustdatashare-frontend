@@ -16,3 +16,6 @@ export const titleInitials = (string: string) => {
       .join('')
       .toUpperCase();
 };
+
+export const getExpiration = (createdAt: Date, ttl: number) =>
+   Math.round((createdAt.getTime() + ttl * 1000 - Date.now()) / 1000);

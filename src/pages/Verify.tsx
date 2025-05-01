@@ -11,6 +11,7 @@ import { REQUESTS } from '../api';
 import { Button } from '../components/ui/button';
 import { useUser } from '../hooks/useUser';
 import { verifySchema } from '../validation';
+import { ApiException } from '../exceptions';
 
 const Verify = () => {
    const { user, setUser } = useUser();
@@ -24,7 +25,7 @@ const Verify = () => {
 
    const verifyMutation = useMutation({
       mutationFn: REQUESTS.VERIFY,
-      onError(error: Error) {
+      onError(error: ApiException) {
          toast.error(error.message);
       },
       onSuccess() {
@@ -35,7 +36,7 @@ const Verify = () => {
 
    const resendMutation = useMutation({
       mutationFn: REQUESTS.RESEND,
-      onError(error: Error) {
+      onError(error: ApiException) {
          toast.error(error.message);
       },
       onSuccess() {

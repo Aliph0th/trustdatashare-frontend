@@ -9,7 +9,7 @@ const Wrapper = () => {
          <Header />
          <main className="flex-1 px-5 py-5 flex flex-col">
             <Outlet />
-            <Toaster expand richColors theme="light" />
+            <Toaster expand richColors theme="light" className="select-none" />
          </main>
          <Footer />
       </div>

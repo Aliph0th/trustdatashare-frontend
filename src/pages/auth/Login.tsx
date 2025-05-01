@@ -11,6 +11,7 @@ import { REQUESTS } from '../../api';
 import { useUser } from '../../hooks/useUser';
 import { loginSchema } from '../../validation';
 import { useNavigate } from 'react-router-dom';
+import { ApiException } from '../../exceptions';
 
 const Login = () => {
    const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Login = () => {
 
    const mutation = useMutation({
       mutationFn: REQUESTS.LOGIN,
-      onError(error: Error) {
+      onError(error: ApiException) {
          toast.error(error.message);
       },
       onSuccess(data) {

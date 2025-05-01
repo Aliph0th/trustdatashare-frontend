@@ -15,13 +15,14 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { REQUESTS } from '../../api';
 import { LogOut } from 'lucide-react';
+import { ApiException } from '../../exceptions';
 
 const HeaderAccount = () => {
    const { user, setUser } = useUser();
 
    const mutation = useMutation({
       mutationFn: REQUESTS.LOGOUT,
-      onError(error: Error) {
+      onError(error: ApiException) {
          toast.error(error.message);
       },
       onSuccess() {
