@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2 } from 'lucide-react';
 import { useUser } from '../../hooks/useUser';
 import ProfileTab from './ProfileTab';
+import SessionsTab from './SessionsTab';
 
 const Settings = () => {
    const { isUserLoading } = useUser();
@@ -23,7 +24,9 @@ const Settings = () => {
             <TabsContent value="profile">
                <ProfileTab />
             </TabsContent>
-            <TabsContent value="sessions"></TabsContent>
+            <TabsContent value="sessions">
+               <SessionsTab />
+            </TabsContent>
          </Tabs>
       </div>
    );
