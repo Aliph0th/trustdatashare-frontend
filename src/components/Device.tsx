@@ -14,7 +14,7 @@ const Device: FC<DeviceProps> = ({ device }) => {
          return { element: <Smartphone />, color: 'bg-gradient-to-r from-emerald-500 to-emerald-900' };
       }
       if (device === 'tablet') {
-         return { element: <TabletSmartphone />, color: 'bg-gradient-to-br from-cyan-400 to-lime-300' };
+         return { element: <TabletSmartphone />, color: 'bg-gradient-to-br from-cyan-500 to-lime-500' };
       }
       return { element: <Microwave />, color: 'bg-gradient-to-r from-slate-300 to-slate-500' };
    }, [device]);

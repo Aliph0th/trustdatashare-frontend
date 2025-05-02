@@ -1,20 +1,20 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import { Loader2, Pencil, X } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { NavLink } from 'react-router-dom';
+import { toast } from 'sonner';
 import { z } from 'zod';
+import { REQUESTS } from '../../api';
+import { ApiException } from '../../exceptions';
 import { useUser } from '../../hooks/useUser';
 import { patchUserSchema } from '../../validation';
 import ChangeAvatar from './ChangeAvatar';
-import { NavLink } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { REQUESTS } from '../../api';
-import { toast } from 'sonner';
-import { ApiException } from '../../exceptions';
 
 const ProfileTab = () => {
    const { user, setUser } = useUser();
@@ -63,7 +63,7 @@ const ProfileTab = () => {
    };
 
    return (
-      <Card>
+      <>
          <ChangeAvatar username={user.username} avatar={user.avatar} />
          <CardContent className="space-y-2">
             <Form {...form}>
@@ -142,7 +142,7 @@ const ProfileTab = () => {
                </form>
             </Form>
          </CardContent>
-      </Card>
+      </>
    );
 };
 

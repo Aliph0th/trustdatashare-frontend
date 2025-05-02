@@ -1,29 +1,47 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useUser } from '../../hooks/useUser';
 import Session from '@/components/Session';
+import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useQuery } from '@tanstack/react-query';
+import { Loader2 } from 'lucide-react';
+import { REQUESTS } from '../../api';
+import { QUERY_KEYS } from '../../constants';
 
 const SessionsTab = () => {
-   const { user } = useUser();
+   const { data, isLoading } = useQuery({
+      queryKey: [QUERY_KEYS.SESSIONS, QUERY_KEYS.USER],
+      queryFn: REQUESTS.GET_SESSIONS
+   });
+
+   if (isLoading) {
+      return (
+         <div className="h-full flex items-center justify-center">
+            <Loader2 size={30} className="animate-spin" />
+         </div>
+      );
+   }
    return (
-      <Card>
+      <>
          <CardHeader>
             <CardTitle className="text-lg">Your active sessions</CardTitle>
          </CardHeader>
          <CardContent className="space-y-1">
             <div>
                <p className="text-gray-800">Current session</p>
-               <Session session={user.sessions.current} />
+               <Session session={data.current} />
             </div>
             <div className="mt-4">
                <p className="text-gray-800">Other sessions</p>
-               {user?.sessions?.sessions?.length ? (
-                  <></>
+               {data?.sessions?.length ? (
+                  <div>
+                     {data.sessions.map(session => (
+                        <Session key={session.sid} session={session} />
+                     ))}
+                  </div>
                ) : (
                   <span className="block text-center text-gray-500 text-sm">You don't have any other sessions.</span>
                )}
             </div>
          </CardContent>
-      </Card>
+      </>
    );
 };
 

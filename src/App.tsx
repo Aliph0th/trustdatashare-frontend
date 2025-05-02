@@ -77,7 +77,7 @@ function App() {
    const { setIsUserLoading, setUser } = useUser();
    const { data, isLoading } = useQuery({
       queryKey: [QUERY_KEYS.USER],
-      queryFn: REQUESTS.MYSELF,
+      queryFn: REQUESTS.GET_MYSELF,
       retry: 1
    });
 

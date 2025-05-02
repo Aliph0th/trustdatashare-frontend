@@ -11,14 +11,16 @@ import { NavLink } from 'react-router-dom';
 import { titleInitials } from '../../lib/utils';
 import { useUser } from '../../hooks/useUser';
 import { Button } from '@/components/ui/button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { REQUESTS } from '../../api';
 import { LogOut } from 'lucide-react';
 import { ApiException } from '../../exceptions';
+import { QUERY_KEYS } from '../../constants';
 
 const HeaderAccount = () => {
    const { user, setUser } = useUser();
+   const queryClient = useQueryClient();
 
    const mutation = useMutation({
       mutationFn: REQUESTS.LOGOUT,
@@ -28,6 +30,7 @@ const HeaderAccount = () => {
       onSuccess() {
          setUser(null);
          toast('Logged out', { icon: <LogOut size={20} /> });
+         queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
       }
    });
 

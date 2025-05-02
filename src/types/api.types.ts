@@ -8,13 +8,15 @@ export type User = {
    createdAt: Date;
    updatedAt: Date;
    hashes: number;
-   sessions?: {
-      current?: ActiveSession;
-      sessions: ActiveSession[];
-   };
+};
+
+export type Sessions = {
+   current?: ActiveSession;
+   sessions: ActiveSession[];
 };
 
 export type ActiveSession = {
+   sid: string;
    metadata: SessionMetadata;
    createdAt: Date;
 };
