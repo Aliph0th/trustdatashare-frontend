@@ -2,15 +2,38 @@ import { FC } from 'react';
 import { ActiveSession } from '../types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import Device from '@/components/Device';
-import { Map } from 'lucide-react';
+import { Loader2, Map, X } from 'lucide-react';
+import { Button } from './ui/button';
+import { useMutation } from '@tanstack/react-query';
+import { REQUESTS } from '../api';
+import { toast } from 'sonner';
+import { ApiException } from '../exceptions';
 
 interface SessionProps {
    session: ActiveSession;
+   deletable?: boolean;
+   onSessionDelete?: (_: string[]) => void;
 }
 
-const Session: FC<SessionProps> = ({ session: { createdAt, metadata } }) => {
+const Session: FC<SessionProps> = ({ session: { createdAt, metadata, sid }, deletable, onSessionDelete }) => {
+   const mutation = useMutation({
+      mutationFn: REQUESTS.DELETE_SESSIONS,
+      onError(error: ApiException) {
+         toast.error(error.message);
+      },
+      onSuccess() {
+         toast.success('Session terminated');
+         if (onSessionDelete) {
+            onSessionDelete([sid]);
+         }
+      }
+   });
+   const handleTerminate = () => {
+      mutation.mutate([sid]);
+   };
+
    return (
-      <Card className="p-4 rounded-sm text-sm shadow-none flex-row gap-0">
+      <Card className="p-4 rounded-sm text-sm shadow-none flex-row gap-0 relative">
          <Device device={metadata.device.device} />
          <div className="grow">
             <CardHeader className="gap-0.5">
@@ -36,25 +59,19 @@ const Session: FC<SessionProps> = ({ session: { createdAt, metadata } }) => {
                </p>
             </CardContent>
          </div>
+         {deletable && (
+            <Button
+               size="sm"
+               variant="ghost"
+               className="absolute top-1.5 right-1"
+               disabled={mutation.isPending}
+               onClick={handleTerminate}
+            >
+               {mutation.isPending ? <Loader2 className="animate-spin" /> : <X />}
+            </Button>
+         )}
       </Card>
    );
 };
 
 export default Session;
-// {
-//   "createdAt": "2025-05-01T21:09:07.998Z",
-//   "metadata": {
-//     "ip": "104.174.125.138",
-//     "location": {
-//       "latitude": 34.0544,
-//       "longitude": -118.2441,
-//       "country": "United States",
-//       "city": "Los Angeles"
-//     },
-//     "device": {
-//       "client": "Chrome 135.0",
-//       "os": "Windows 10.0 x64",
-//       "device": "desktop"
-//     }
-//   }
-// }

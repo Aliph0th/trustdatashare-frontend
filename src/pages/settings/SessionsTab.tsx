@@ -1,15 +1,30 @@
 import Session from '@/components/Session';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import { REQUESTS } from '../../api';
 import { QUERY_KEYS } from '../../constants';
+import { useCallback } from 'react';
+import { Sessions } from '../../types';
 
 const SessionsTab = () => {
+   const queryClient = useQueryClient();
    const { data, isLoading } = useQuery({
       queryKey: [QUERY_KEYS.SESSIONS, QUERY_KEYS.USER],
-      queryFn: REQUESTS.GET_SESSIONS
+      queryFn: REQUESTS.GET_SESSIONS,
+      staleTime: 10 * 60000
    });
+
+   const onSessionDelete = useCallback(
+      (ids: string[]) => {
+         const sessions: Sessions = {
+            current: data.current,
+            sessions: data.sessions.filter(session => !ids.includes(session.sid))
+         };
+         queryClient.setQueryData([QUERY_KEYS.SESSIONS, QUERY_KEYS.USER], sessions);
+      },
+      [data, queryClient]
+   );
 
    if (isLoading) {
       return (
@@ -33,7 +48,7 @@ const SessionsTab = () => {
                {data?.sessions?.length ? (
                   <div>
                      {data.sessions.map(session => (
-                        <Session key={session.sid} session={session} />
+                        <Session key={session.sid} session={session} onSessionDelete={onSessionDelete} deletable />
                      ))}
                   </div>
                ) : (
