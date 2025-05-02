@@ -54,7 +54,7 @@ const ProfileTab = () => {
       if (data.username === user.username) {
          delete data.username;
       }
-      mutation.mutate({ data });
+      mutation.mutate(data);
    }
 
    const handleCancelEditing = () => {

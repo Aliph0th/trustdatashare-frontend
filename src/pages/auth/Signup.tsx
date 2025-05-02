@@ -43,7 +43,7 @@ const Signup = () => {
    });
 
    function onSubmit(data: z.infer<typeof signupSchema>) {
-      mutation.mutate({ data });
+      mutation.mutate(data);
    }
 
    return (

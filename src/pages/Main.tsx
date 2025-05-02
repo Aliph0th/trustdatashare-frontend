@@ -64,7 +64,7 @@ const Main = () => {
    });
 
    function onSubmit(data: z.infer<typeof createDataSchema>) {
-      mutation.mutate({ data });
+      mutation.mutate(data);
    }
 
    if (isUserLoading) {

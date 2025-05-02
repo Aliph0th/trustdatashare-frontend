@@ -40,7 +40,7 @@ const Login = () => {
    });
 
    function onSubmit(data: z.infer<typeof loginSchema>) {
-      mutation.mutate({ data });
+      mutation.mutate(data);
    }
 
    return (

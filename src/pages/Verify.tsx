@@ -45,7 +45,7 @@ const Verify = () => {
    });
 
    function onSubmit(data: z.infer<typeof verifySchema>) {
-      verifyMutation.mutate({ data });
+      verifyMutation.mutate(data);
    }
    const resendHandle = () => {
       resendMutation.mutate();

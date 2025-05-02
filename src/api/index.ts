@@ -28,22 +28,22 @@ const apiCall = async <T = any>(callback: () => Promise<AxiosResponse<T, any>>) 
 };
 
 export const REQUESTS = {
-   SIGN_UP: async ({ data }: { data: z.infer<typeof signupSchema> }) => {
+   SIGN_UP: async (data: z.infer<typeof signupSchema>) => {
       return apiCall(() => API.post<User>('/auth/register', data));
    },
-   LOGIN: async ({ data }: { data: z.infer<typeof loginSchema> }) => {
+   LOGIN: async (data: z.infer<typeof loginSchema>) => {
       return apiCall(() => API.post<User>('/auth/login', data));
    },
    LOGOUT: async () => {
       return apiCall(() => API.post('/auth/logout'));
    },
-   VERIFY: async ({ data }: { data: z.infer<typeof verifySchema> }) => {
+   VERIFY: async (data: z.infer<typeof verifySchema>) => {
       return apiCall(() => API.post('/auth/email/verify', data));
    },
    RESEND: async () => {
       return apiCall(() => API.post('/auth/email/resend'));
    },
-   CREATE_POST: async ({ data }: { data: z.infer<typeof createDataSchema> }) => {
+   CREATE_POST: async (data: z.infer<typeof createDataSchema>) => {
       return apiCall(() => API.post<{ id: string }>('/data', data));
    },
    GET_POST: async ({ id, password }: { id: string; password?: string }) => {
@@ -59,7 +59,14 @@ export const REQUESTS = {
    GET_SESSIONS: async () => {
       return apiCall(() => API.get<Sessions>('/sessions/me'));
    },
-   PATCH_USER: async ({ data }: { data: z.infer<typeof patchUserSchema> }) => {
+   DELETE_SESSIONS: async (ids: string[]) => {
+      return apiCall(() =>
+         API.delete('/sessions', {
+            data: { sessions: ids }
+         })
+      );
+   },
+   PATCH_USER: async (data: z.infer<typeof patchUserSchema>) => {
       return apiCall(() => API.patch<Omit<User, 'sessions'>>('/users/me', data));
    }
 };
