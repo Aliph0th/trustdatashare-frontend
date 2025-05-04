@@ -1,8 +1,8 @@
-import { z } from 'zod';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { createDataSchema, loginSchema, patchUserSchema, signupSchema, verifySchema } from '../validation';
-import { Data, Sessions, User } from '../types';
+import { z } from 'zod';
 import { ApiException } from '../exceptions';
+import { Data, MyPostsResponse, Sessions, User } from '../types';
+import { createDataSchema, loginSchema, patchUserSchema, signupSchema, verifySchema } from '../validation';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -53,18 +53,20 @@ export const REQUESTS = {
       }
       return apiCall(() => API.get<Data>(`/data/${id}`, { headers }));
    },
+   GET_MY_POSTS: async (params: { page?: number; limit?: number }) => {
+      return apiCall(() => API.get<MyPostsResponse>('/data/my', { params }));
+   },
    GET_MYSELF: async () => {
       return apiCall(() => API.get<User>('/users/me'));
    },
    GET_SESSIONS: async () => {
       return apiCall(() => API.get<Sessions>('/sessions/me'));
    },
-   DELETE_SESSIONS: async (ids: string[]) => {
-      return apiCall(() =>
-         API.delete('/sessions', {
-            data: { sessions: ids }
-         })
-      );
+   DELETE_SESSION: async (id: string) => {
+      return apiCall(() => API.delete(`/sessions/${id}`));
+   },
+   DELETE_DATA: async (id: string) => {
+      return apiCall(() => API.delete(`/data/${id}`));
    },
    PATCH_USER: async (data: z.infer<typeof patchUserSchema>) => {
       return apiCall(() => API.patch<Omit<User, 'sessions'>>('/users/me', data));

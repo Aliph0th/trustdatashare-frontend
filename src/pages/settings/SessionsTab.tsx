@@ -16,10 +16,10 @@ const SessionsTab = () => {
    });
 
    const onSessionDelete = useCallback(
-      (ids: string[]) => {
+      (id: string) => {
          const sessions: Sessions = {
             current: data.current,
-            sessions: data.sessions.filter(session => !ids.includes(session.sid))
+            sessions: data.sessions.filter(session => session.sid !== id)
          };
          queryClient.setQueryData([QUERY_KEYS.SESSIONS, QUERY_KEYS.USER], sessions);
       },

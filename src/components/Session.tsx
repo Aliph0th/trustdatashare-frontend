@@ -12,24 +12,24 @@ import { ApiException } from '../exceptions';
 interface SessionProps {
    session: ActiveSession;
    deletable?: boolean;
-   onSessionDelete?: (_: string[]) => void;
+   onSessionDelete?: (_: string) => void;
 }
 
 const Session: FC<SessionProps> = ({ session: { createdAt, metadata, sid }, deletable, onSessionDelete }) => {
    const mutation = useMutation({
-      mutationFn: REQUESTS.DELETE_SESSIONS,
+      mutationFn: REQUESTS.DELETE_SESSION,
       onError(error: ApiException) {
          toast.error(error.message);
       },
       onSuccess() {
          toast.success('Session terminated');
          if (onSessionDelete) {
-            onSessionDelete([sid]);
+            onSessionDelete(sid);
          }
       }
    });
    const handleTerminate = () => {
-      mutation.mutate([sid]);
+      mutation.mutate(sid);
    };
 
    return (
