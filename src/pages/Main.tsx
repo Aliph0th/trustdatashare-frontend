@@ -92,7 +92,7 @@ const Main = () => {
                   </FormItem>
                )}
             />
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button type="submit" disabled={mutation.isPending || !form.formState.isDirty}>
                {mutation.isPending && <Loader2 className="animate-spin" />}
                Submit
             </Button>

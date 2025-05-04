@@ -56,3 +56,10 @@ export type Data = {
       isPremium: boolean;
    };
 };
+
+export type ReducedData = Omit<Data, 'content' | 'owner'>;
+
+export type MyPostsResponse = {
+   hasMore: boolean;
+   data: ReducedData[];
+};

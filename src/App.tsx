@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { useUser } from './hooks/useUser';
 import Post from './pages/Post';
 import Settings from './pages/settings/Settings';
+import MyPosts from './pages/myposts/MyPosts';
 
 const router = createBrowserRouter([
    {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
                {
                   element: <Post />,
                   path: 'post/:id'
+               },
+               {
+                  element: (
+                     <AuthWrapper to="/login" isAuthRequired>
+                        <MyPosts />
+                     </AuthWrapper>
+                  ),
+                  path: 'my'
                },
                {
                   element: (

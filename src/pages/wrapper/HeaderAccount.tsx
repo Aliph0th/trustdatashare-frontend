@@ -65,7 +65,7 @@ const HeaderAccount = () => {
                         </>
                      )}
                      <DropdownMenuItem asChild>
-                        <NavLink to="/profile" className={({ isActive }) => `${isActive ? 'font-bold' : ''} w-full`}>
+                        <NavLink to="/my" className={({ isActive }) => `${isActive ? 'font-bold' : ''} w-full`}>
                            My posts
                         </NavLink>
                      </DropdownMenuItem>
