@@ -26,5 +26,5 @@ export const truncateText = (text: string, charsToKeep = 10) => {
    }
    const start = Math.ceil((65 - charsToKeep) / 5);
    const end = text.length - charsToKeep;
-   return text.slice(0, start) + '...' + text.slice(end);
+   return text.slice(0, start) + ' ... ' + text.slice(end);
 };

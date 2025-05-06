@@ -30,6 +30,7 @@ const Post = () => {
       queryFn: () => REQUESTS.GET_POST({ id, password: form.getValues().password }),
       enabled: !!id,
       retry: false,
+      staleTime: 5 * 60000,
       select(data) {
          return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) };
       }

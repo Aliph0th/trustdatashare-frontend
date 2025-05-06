@@ -26,9 +26,7 @@ const Main = () => {
    const form = useForm<z.infer<typeof createDataSchema>>({
       resolver: zodResolver(createDataSchema),
       defaultValues: {
-         content: '',
-         title: '',
-         password: ''
+         content: ''
       }
    });
 
@@ -86,7 +84,7 @@ const Main = () => {
                render={({ field }) => (
                   <FormItem>
                      <FormControl>
-                        <FloatingLabelInput label="Title" {...field} />
+                        <FloatingLabelInput label="Title" {...field} value={field.value || ''} />
                      </FormControl>
                      <FormMessage />
                   </FormItem>
@@ -128,7 +126,7 @@ const Main = () => {
                   render={({ field }) => (
                      <FormItem>
                         <FormControl>
-                           <Input placeholder="Password" type="password" {...field} />
+                           <Input placeholder="Password" type="password" {...field} value={field.value || ''} />
                         </FormControl>
                         <FormMessage />
                      </FormItem>
