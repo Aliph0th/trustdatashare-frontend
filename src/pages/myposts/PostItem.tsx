@@ -54,7 +54,7 @@ const PostItem: FC<PostItemProps> = ({ post, onPostDelete, index }) => {
          <CardHeader className="gap-0.5">
             <div className="flex justify-between items-center">
                <div>
-                  <CardTitle className={`${post.title ? '' : 'italic'}`}>
+                  <CardTitle className={`${post.title ? '' : 'italic'} hover:underline`}>
                      <NavLink to={`/post/${post.id}`}>{post.title || 'Untitled post'}</NavLink>
                   </CardTitle>
                   <p className="text-sm text-gray-500">
