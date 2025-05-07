@@ -64,7 +64,7 @@ const ProfileTab = () => {
 
    return (
       <>
-         <ChangeAvatar username={user.username} avatar={user.avatar} />
+         <ChangeAvatar user={user} setUser={setUser} />
          <CardContent className="space-y-2">
             <Form {...form}>
                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2.5 h-full">

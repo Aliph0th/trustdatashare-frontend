@@ -149,7 +149,7 @@ const Main = () => {
                   {!user && (
                      <TooltipProvider>
                         <Tooltip>
-                           <TooltipTrigger>
+                           <TooltipTrigger type="button">
                               <CircleHelp size={18} className="text-gray-500" />
                            </TooltipTrigger>
                            <TooltipContent>

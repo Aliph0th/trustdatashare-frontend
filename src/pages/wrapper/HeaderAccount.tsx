@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
    DropdownMenu,
    DropdownMenuTrigger,
@@ -45,7 +45,7 @@ const HeaderAccount = () => {
                <DropdownMenu>
                   <DropdownMenuTrigger className="rounded-full focus-visible:ring-3 ring-black">
                      <Avatar className="pointer-events-none select-none">
-                        {/* <AvatarImage src={user?.photo_url} /> */}
+                        <AvatarImage src={user?.avatar} />
                         <AvatarFallback className="text-sm bg-linear-to-t from-cyan-500 to-blue-500">
                            {titleInitials(user?.username || '')}
                         </AvatarFallback>

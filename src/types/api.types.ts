@@ -2,12 +2,10 @@ export type User = {
    id: number;
    email: string;
    username: string;
-   isPremium: boolean;
    avatar?: string | null;
    isEmailVerified: boolean;
    createdAt: Date;
    updatedAt: Date;
-   hashes: number;
 };
 
 export type Sessions = {

@@ -40,6 +40,11 @@ export const REQUESTS = {
    VERIFY: async (data: z.infer<typeof verifySchema>) => {
       return apiCall(() => API.post('/auth/email/verify', data));
    },
+   CHANGE_AVATAR: async (data: FormData) => {
+      return apiCall(() =>
+         API.patch<{ url: string }>('/users/avatar', data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      );
+   },
    RESEND: async () => {
       return apiCall(() => API.post('/auth/email/resend'));
    },
