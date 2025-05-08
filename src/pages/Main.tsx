@@ -26,7 +26,8 @@ const Main = () => {
    const form = useForm<z.infer<typeof createDataSchema>>({
       resolver: zodResolver(createDataSchema),
       defaultValues: {
-         content: ''
+         content: '',
+         hideOwner: false
       }
    });
 

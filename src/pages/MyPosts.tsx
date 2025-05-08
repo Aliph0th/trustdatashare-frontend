@@ -3,11 +3,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import { useCallback } from 'react';
-import { REQUESTS } from '../../api';
-import { QUERY_KEYS } from '../../constants';
-import { MyPostsResponse } from '../../types';
-import PostItem from './PostItem';
+import { REQUESTS } from '../api';
+import { QUERY_KEYS } from '../constants';
+import { PostsResponse } from '../types';
 import { NavLink } from 'react-router-dom';
+import PostItem from '../components/PostItem';
 
 const MyPosts = () => {
    const queryClient = useQueryClient();
@@ -29,7 +29,7 @@ const MyPosts = () => {
    });
    const onPostDelete = useCallback(
       (id: string, index: number) => {
-         const pages = data.pages.map<MyPostsResponse>((page, idx) => {
+         const pages = data.pages.map<PostsResponse>((page, idx) => {
             if (index !== idx) {
                return page;
             }
@@ -51,23 +51,27 @@ const MyPosts = () => {
       );
    }
    return (
-      <ScrollArea className="w-full px-10">
-         <div className="flex w-full flex-col items-center gap-3">
-            {data.pages.map((page, index) =>
-               page.data.map(post => (
-                  <PostItem
-                     key={post.id}
-                     post={post}
-                     index={data.pageParams[index] as number}
-                     onPostDelete={onPostDelete}
-                  />
-               ))
-            )}
-            <InfiniteScroll hasMore={hasNextPage} isLoading={isLoading} next={fetchNextPage} threshold={1}>
-               {hasNextPage && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
-            </InfiniteScroll>
-         </div>
-      </ScrollArea>
+      <>
+         <p className="px-10 text-2xl mb-4 font-semibold">Your posts</p>
+         <ScrollArea className="w-full px-10">
+            <div className="flex w-full flex-col items-center gap-3">
+               {data.pages.map((page, index) =>
+                  page.data.map(post => (
+                     <PostItem
+                        key={post.id}
+                        post={post}
+                        index={data.pageParams[index] as number}
+                        onPostDelete={onPostDelete}
+                        controls
+                     />
+                  ))
+               )}
+               <InfiniteScroll hasMore={hasNextPage} isLoading={isLoading} next={fetchNextPage} threshold={1}>
+                  {hasNextPage && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
+               </InfiniteScroll>
+            </div>
+         </ScrollArea>
+      </>
    );
 };
 

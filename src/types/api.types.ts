@@ -8,6 +8,12 @@ export type User = {
    updatedAt: Date;
 };
 
+export type PublicUser = {
+   id: number;
+   username: string;
+   avatar?: string | null;
+};
+
 export type Sessions = {
    current?: ActiveSession;
    sessions: ActiveSession[];
@@ -57,7 +63,7 @@ export type Data = {
 
 export type ReducedData = Omit<Data, 'content' | 'owner'>;
 
-export type MyPostsResponse = {
+export type PostsResponse = {
    hasMore: boolean;
    data: ReducedData[];
 };

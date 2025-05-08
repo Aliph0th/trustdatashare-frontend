@@ -69,7 +69,8 @@ export const QUERY_KEYS = {
    USER: 'user',
    DATA: 'data',
    SESSIONS: 'sessions',
-   POSTS: 'posts'
+   POSTS: 'posts',
+   USER_POSTS: 'user_posts'
 };
 
 export const MAX_GUEST_EXPIRATION = 24 * 3600;

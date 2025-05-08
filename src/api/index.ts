@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { z } from 'zod';
 import { ApiException } from '../exceptions';
-import { Data, MyPostsResponse, Sessions, User } from '../types';
+import { Data, PostsResponse, PublicUser, Sessions, User } from '../types';
 import { createDataSchema, loginSchema, patchUserSchema, signupSchema, verifySchema } from '../validation';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -59,10 +59,16 @@ export const REQUESTS = {
       return apiCall(() => API.get<Data>(`/data/${id}`, { headers }));
    },
    GET_MY_POSTS: async (params: { page?: number; limit?: number }) => {
-      return apiCall(() => API.get<MyPostsResponse>('/data/my', { params }));
+      return apiCall(() => API.get<PostsResponse>('/data/my', { params }));
+   },
+   GET_USER_POSTS: async (id: number, params: { page?: number; limit?: number }) => {
+      return apiCall(() => API.get<PostsResponse>(`/data/visible/${id}`, { params }));
    },
    GET_MYSELF: async () => {
       return apiCall(() => API.get<User>('/users/me'));
+   },
+   GET_USER: async (id: number) => {
+      return apiCall(() => API.get<PublicUser>(`/users/${id}`));
    },
    GET_SESSIONS: async () => {
       return apiCall(() => API.get<Sessions>('/sessions/me'));

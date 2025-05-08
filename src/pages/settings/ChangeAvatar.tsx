@@ -1,8 +1,7 @@
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { CardHeader } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { AvatarImage } from '@radix-ui/react-avatar';
 import { useMutation } from '@tanstack/react-query';
 import { Check, CircleHelp, Upload, X } from 'lucide-react';
 import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useRef, useState } from 'react';

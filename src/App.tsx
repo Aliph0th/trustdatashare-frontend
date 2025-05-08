@@ -14,7 +14,8 @@ import { useEffect } from 'react';
 import { useUser } from './hooks/useUser';
 import Post from './pages/Post';
 import Settings from './pages/settings/Settings';
-import MyPosts from './pages/myposts/MyPosts';
+import MyPosts from './pages/MyPosts';
+import UserPosts from './pages/UserPosts';
 
 const router = createBrowserRouter([
    {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
                {
                   element: <Post />,
                   path: 'post/:id'
+               },
+               {
+                  element: <UserPosts />,
+                  path: 'user/:id'
                },
                {
                   element: (
