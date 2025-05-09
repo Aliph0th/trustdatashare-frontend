@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { REQUESTS } from '../api';
@@ -12,8 +12,10 @@ import { Button } from '../components/ui/button';
 import { useUser } from '../hooks/useUser';
 import { verifySchema } from '../validation';
 import { ApiException } from '../exceptions';
+import { useEffect } from 'react';
 
 const Verify = () => {
+   const { token } = useParams();
    const { user, setUser } = useUser();
 
    const form = useForm<z.infer<typeof verifySchema>>({
@@ -33,7 +35,6 @@ const Verify = () => {
          toast.success('Email is verified');
       }
    });
-
    const resendMutation = useMutation({
       mutationFn: REQUESTS.RESEND,
       onError(error: ApiException) {
@@ -43,6 +44,13 @@ const Verify = () => {
          toast.success('Mail has been sent. Check your inbox or spam');
       }
    });
+
+   useEffect(() => {
+      if (token) {
+         verifyMutation.mutate({ token });
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [token]);
 
    function onSubmit(data: z.infer<typeof verifySchema>) {
       verifyMutation.mutate(data);

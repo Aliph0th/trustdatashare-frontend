@@ -7,7 +7,6 @@ import { useMutation } from '@tanstack/react-query';
 import { Loader2, Pencil, X } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { REQUESTS } from '../../api';
@@ -73,14 +72,6 @@ const ProfileTab = () => {
                         <FormLabel className="text-md">Email</FormLabel>
                         <span>{user.email}</span>
                      </div>
-                     {!user.isEmailVerified && (
-                        <NavLink
-                           to="/verify"
-                           className="block bg-yellow-400 hover:bg-yellow-500 rounded-lg py-2 px-3.5"
-                        >
-                           Verify email
-                        </NavLink>
-                     )}
                   </FormItem>
                   <FormField
                      control={form.control}

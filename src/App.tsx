@@ -1,21 +1,21 @@
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Wrapper from './pages/wrapper';
+import { REQUESTS } from './api';
+import AuthWrapper from './components/AuthWrapper';
+import { QUERY_KEYS } from './constants';
+import { useUser } from './hooks/useUser';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
 import Error from './pages/Error';
 import Main from './pages/Main';
+import MyPosts from './pages/MyPosts';
 import NotFound from './pages/NotFound';
-import Signup from './pages/auth/Signup';
-import Login from './pages/auth/Login';
-import Verify from './pages/Verify';
-import AuthWrapper from './components/AuthWrapper';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from './constants';
-import { REQUESTS } from './api';
-import { useEffect } from 'react';
-import { useUser } from './hooks/useUser';
 import Post from './pages/post/Post';
 import Settings from './pages/settings/Settings';
-import MyPosts from './pages/MyPosts';
 import UserPosts from './pages/UserPosts';
+import Verify from './pages/Verify';
+import Wrapper from './pages/wrapper';
 
 const router = createBrowserRouter([
    {
@@ -99,9 +99,10 @@ function App() {
       setIsUserLoading(isLoading);
    }, [isLoading, setIsUserLoading]);
    useEffect(() => {
-      if (data) {
-         setUser(data);
+      if (!data) {
+         return;
       }
+      setUser(data);
    }, [data, setUser]);
 
    return <RouterProvider router={router} />;
