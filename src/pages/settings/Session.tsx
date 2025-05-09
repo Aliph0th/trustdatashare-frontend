@@ -1,13 +1,13 @@
 import { FC } from 'react';
-import { ActiveSession } from '../types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import Device from '@/components/Device';
+import Device from '@/pages/settings/Device';
 import { Loader2, Map, X } from 'lucide-react';
-import { Button } from './ui/button';
 import { useMutation } from '@tanstack/react-query';
-import { REQUESTS } from '../api';
 import { toast } from 'sonner';
-import { ApiException } from '../exceptions';
+import { REQUESTS } from '../../api';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { ApiException } from '../../exceptions';
+import { ActiveSession } from '../../types';
 
 interface SessionProps {
    session: ActiveSession;

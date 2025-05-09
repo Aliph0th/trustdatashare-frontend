@@ -12,7 +12,7 @@ import { QUERY_KEYS } from './constants';
 import { REQUESTS } from './api';
 import { useEffect } from 'react';
 import { useUser } from './hooks/useUser';
-import Post from './pages/Post';
+import Post from './pages/post/Post';
 import Settings from './pages/settings/Settings';
 import MyPosts from './pages/MyPosts';
 import UserPosts from './pages/UserPosts';

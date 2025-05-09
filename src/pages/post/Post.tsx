@@ -1,4 +1,4 @@
-import PostAuthor from '@/components/PostAuthor';
+import PostAuthor from '@/pages/post/PostAuthor';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -8,13 +8,14 @@ import { Loader2, Lock } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { z } from 'zod';
-import { REQUESTS } from '../api';
-import { QUERY_KEYS } from '../constants';
-import { ApiException } from '../exceptions';
-import { getExpiration } from '../lib/utils';
-import { Data } from '../types';
-import { confirmPasswordSchema } from '../validation';
-import NotFound from './NotFound';
+import { REQUESTS } from '../../api';
+import { QUERY_KEYS } from '../../constants';
+import { ApiException } from '../../exceptions';
+import { getExpiration } from '../../lib/utils';
+import { Data } from '../../types';
+import { confirmPasswordSchema } from '../../validation';
+import NotFound from '../NotFound';
+import { toast } from 'sonner';
 
 const Post = () => {
    const { id } = useParams();
@@ -47,6 +48,7 @@ const Post = () => {
       );
    }
    if (error?.code === 401) {
+      toast.error(error.message);
       return (
          <>
             <span className="text-center text-lg mb-3 font-semibold">Confirm the password to access to this post</span>

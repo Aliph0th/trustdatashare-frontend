@@ -1,6 +1,6 @@
 import { EyeOff, User, CircleUserRound } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { Data } from '../types';
+import { Data } from '../../types';
 import { FC } from 'react';
 
 interface PostAuthorProps {
