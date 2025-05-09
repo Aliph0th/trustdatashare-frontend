@@ -1,5 +1,5 @@
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { EyeOff, Loader2, Lock, Pencil, Trash2 } from 'lucide-react';
+import { Ellipsis, EyeOff, Loader2, Lock, Pencil, Trash2 } from 'lucide-react';
 import { FC } from 'react';
 import {
    AlertDialog,
@@ -20,6 +20,7 @@ import { REQUESTS } from '../api';
 import { ApiException } from '../exceptions';
 import { truncateText } from '../lib/utils';
 import { ReducedData } from '../types';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 interface PostItemProps {
    post: ReducedData;
@@ -68,33 +69,38 @@ const PostItem: FC<PostItemProps> = ({ post, onPostDelete, index, controls }) =>
                   </CardDescription>
                </div>
                {controls && (
-                  <div>
-                     <Button size="sm" variant="outline" className="mr-2" disabled={mutation.isPending}>
-                        <Pencil />
-                     </Button>
-                     <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                           <Button size="sm" variant="outline" disabled={mutation.isPending}>
-                              {mutation.isPending ? <Loader2 className="animate-spin" /> : <Trash2 />}
-                           </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                           <AlertDialogHeader>
-                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                 This action cannot be undone. This will permanently delete your account and remove your
-                                 data from our servers.
-                              </AlertDialogDescription>
-                           </AlertDialogHeader>
-                           <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction variant="destructive" onClick={handleDelete}>
-                                 Yes, delete
-                              </AlertDialogAction>
-                           </AlertDialogFooter>
-                        </AlertDialogContent>
-                     </AlertDialog>
-                  </div>
+                  <Popover>
+                     <PopoverTrigger>
+                        <Ellipsis className="text-gray-500" size={20} />
+                     </PopoverTrigger>
+                     <PopoverContent className="w-fit p-3">
+                        <Button size="sm" variant="outline" className="mr-2" disabled={mutation.isPending}>
+                           <Pencil />
+                        </Button>
+                        <AlertDialog>
+                           <AlertDialogTrigger asChild>
+                              <Button size="sm" variant="outline" disabled={mutation.isPending}>
+                                 {mutation.isPending ? <Loader2 className="animate-spin" /> : <Trash2 />}
+                              </Button>
+                           </AlertDialogTrigger>
+                           <AlertDialogContent>
+                              <AlertDialogHeader>
+                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                 <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your account and remove
+                                    your data from our servers.
+                                 </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                 <AlertDialogAction variant="destructive" onClick={handleDelete}>
+                                    Yes, delete
+                                 </AlertDialogAction>
+                              </AlertDialogFooter>
+                           </AlertDialogContent>
+                        </AlertDialog>
+                     </PopoverContent>
+                  </Popover>
                )}
             </div>
          </CardHeader>
