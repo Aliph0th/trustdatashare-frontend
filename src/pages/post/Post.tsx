@@ -6,36 +6,53 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import { Loader2, Lock } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { z } from 'zod';
 import { REQUESTS } from '../../api';
 import { QUERY_KEYS } from '../../constants';
 import { ApiException } from '../../exceptions';
-import { getExpiration } from '../../lib/utils';
+import { formatSeconds, getExpiration } from '../../lib/utils';
 import { Data } from '../../types';
 import { confirmPasswordSchema } from '../../validation';
 import NotFound from '../NotFound';
 import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
 
 const Post = () => {
    const { id } = useParams();
+   const navigate = useNavigate();
    const form = useForm<z.infer<typeof confirmPasswordSchema>>({
       resolver: zodResolver(confirmPasswordSchema),
       defaultValues: {
          password: ''
       }
    });
+   const [expiration, setExpiration] = useState(-1);
 
    const { data, isLoading, refetch, error } = useQuery<Data, ApiException>({
       queryKey: [QUERY_KEYS.DATA, id],
       queryFn: () => REQUESTS.GET_POST({ id, password: form.getValues().password }),
       enabled: !!id,
       retry: false,
-      staleTime: 5 * 60000,
-      select(data) {
-         return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) };
-      }
+      staleTime: 5 * 60000
    });
+
+   useEffect(() => {
+      if (data?.ttl > 0) {
+         setExpiration(getExpiration(data.createdAt, data.ttl));
+         const interval = setInterval(() => {
+            setExpiration(prev => prev - 1);
+         }, 1000);
+         return () => clearInterval(interval);
+      }
+   }, [data]);
+
+   useEffect(() => {
+      if (expiration === 0) {
+         navigate('/', { replace: true });
+         toast.info('Post has expired');
+      }
+   }, [expiration, navigate]);
 
    function onSubmit() {
       refetch();
@@ -92,7 +109,7 @@ const Post = () => {
                {data.createdAt.getTime() !== data.updatedAt.getTime() && (
                   <p>Edited: {data.updatedAt.toLocaleString('ru-RU')}</p>
                )}
-               {data.ttl > 0 && <p>Expires in: {getExpiration(data.createdAt, data.ttl)} seconds</p>}
+               {data.ttl > 0 && <p>Expires in: {formatSeconds(expiration)}</p>}
             </div>
          </div>
          {data?.description && <p className="text-gray-900">{data.description}</p>}

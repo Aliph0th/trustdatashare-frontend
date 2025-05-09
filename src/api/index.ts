@@ -56,7 +56,8 @@ export const REQUESTS = {
       if (password) {
          headers.Authorization = `Basic ${password}`;
       }
-      return apiCall(() => API.get<Data>(`/data/${id}`, { headers }));
+      const data = await apiCall(() => API.get<Data>(`/data/${id}`, { headers }));
+      return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) };
    },
    GET_MY_POSTS: async (params: { page?: number; limit?: number }) => {
       return apiCall(() => API.get<PostsResponse>('/data/my', { params }));

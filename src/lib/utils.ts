@@ -28,3 +28,38 @@ export const truncateText = (text: string, charsToKeep = 10) => {
    const end = text.length - charsToKeep;
    return text.slice(0, start) + ' ... ' + text.slice(end);
 };
+
+export const formatSeconds = (seconds: number) => {
+   const secondsInYear = 60 * 60 * 24 * 365;
+   const secondsInMonth = 60 * 60 * 24 * 30;
+   const secondsInDay = 60 * 60 * 24;
+   const secondsInHour = 60 * 60;
+   const secondsInMinute = 60;
+
+   const years = Math.floor(seconds / secondsInYear);
+   seconds %= secondsInYear;
+
+   const months = Math.floor(seconds / secondsInMonth);
+   seconds %= secondsInMonth;
+
+   const days = Math.floor(seconds / secondsInDay);
+   seconds %= secondsInDay;
+
+   const hours = Math.floor(seconds / secondsInHour);
+   seconds %= secondsInHour;
+
+   const minutes = Math.floor(seconds / secondsInMinute);
+   seconds %= secondsInMinute;
+
+   const result = [];
+   if (years > 0) result.push(`${years} year${years > 1 ? 's' : ''}`);
+   if (months > 0) result.push(`${months} month${months > 1 ? 's' : ''}`);
+   if (years === 0 && months === 0) {
+      if (days > 0) result.push(`${days} day${days > 1 ? 's' : ''}`);
+   }
+   if (hours > 0) result.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+   if (minutes > 0) result.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+   if (seconds > 0) result.push(`${seconds} second${seconds > 1 ? 's' : ''}`);
+
+   return result.join(', ') || '0 seconds';
+};

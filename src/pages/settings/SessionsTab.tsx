@@ -1,4 +1,3 @@
-import Session from '@/components/Session';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
@@ -6,6 +5,7 @@ import { REQUESTS } from '../../api';
 import { QUERY_KEYS } from '../../constants';
 import { useCallback } from 'react';
 import { Sessions } from '../../types';
+import Session from './Session';
 
 const SessionsTab = () => {
    const queryClient = useQueryClient();
