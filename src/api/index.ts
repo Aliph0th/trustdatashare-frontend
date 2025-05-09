@@ -82,5 +82,8 @@ export const REQUESTS = {
    },
    PATCH_USER: async (data: z.infer<typeof patchUserSchema>) => {
       return apiCall(() => API.patch<Omit<User, 'sessions'>>('/users/me', data));
+   },
+   CHECK_CREDENTIALS: async <T extends { username?: string; email?: string }>(credentials: T) => {
+      return apiCall(() => API.get<{ [K in keyof T]: T[K] }>('/users/availability', { params: credentials }));
    }
 };

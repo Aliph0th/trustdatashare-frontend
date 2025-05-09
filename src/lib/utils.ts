@@ -1,5 +1,8 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { credentialsSchema } from '../validation';
+import { REQUESTS } from '../api';
+import { UseFormClearErrors, UseFormSetError } from 'react-hook-form';
 
 export function cn(...inputs: ClassValue[]) {
    return twMerge(clsx(inputs));
@@ -62,4 +65,20 @@ export const formatSeconds = (seconds: number) => {
    if (seconds > 0) result.push(`${seconds} second${seconds > 1 ? 's' : ''}`);
 
    return result.join(', ') || '0 seconds';
+};
+
+export const fetchAvailability = async (
+   field: 'username' | 'email',
+   value: string,
+   setError: UseFormSetError<{ username?: string; email?: string }>,
+   clearError: UseFormClearErrors<{ username?: string; email?: string }>
+) => {
+   if (credentialsSchema.safeParse({ [field]: value }).success) {
+      const response = await REQUESTS.CHECK_CREDENTIALS({ [field]: value });
+      if (!response[field]) {
+         setError(field, { message: `${field} is occupied` });
+      } else {
+         clearError(field);
+      }
+   }
 };

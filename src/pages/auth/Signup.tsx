@@ -4,14 +4,17 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { REQUESTS } from '../../api';
-import { useUser } from '../../hooks/useUser';
-import { signupSchema } from '../../validation';
-import { useNavigate } from 'react-router-dom';
 import { ApiException } from '../../exceptions';
+import { useDebounce } from '../../hooks/useDebounce';
+import { useUser } from '../../hooks/useUser';
+import { fetchAvailability } from '../../lib/utils';
+import { signupSchema } from '../../validation';
 
 const Signup = () => {
    const { setUser } = useUser();
@@ -25,6 +28,15 @@ const Signup = () => {
          repeatedPassword: ''
       }
    });
+
+   const debouncedUsername = useDebounce(form.watch('username'), 900);
+   const debouncedEmail = useDebounce(form.watch('email'), 900);
+   useEffect(() => {
+      fetchAvailability('username', debouncedUsername, form.setError, form.clearErrors);
+   }, [debouncedUsername, form]);
+   useEffect(() => {
+      fetchAvailability('email', debouncedEmail, form.setError, form.clearErrors);
+   }, [debouncedEmail, form]);
 
    const mutation = useMutation({
       mutationFn: REQUESTS.SIGN_UP,
@@ -58,7 +70,7 @@ const Signup = () => {
                      <FormControl>
                         <Input placeholder="John Smith" {...field} />
                      </FormControl>
-                     <FormMessage />
+                     <FormMessage className="first-letter:capitalize" />
                   </FormItem>
                )}
             />
@@ -72,7 +84,7 @@ const Signup = () => {
                         <Input placeholder="example@gmail.com" {...field} />
                      </FormControl>
                      <FormDescription>We'll send a verification code to it</FormDescription>
-                     <FormMessage />
+                     <FormMessage className="first-letter:capitalize" />
                   </FormItem>
                )}
             />
