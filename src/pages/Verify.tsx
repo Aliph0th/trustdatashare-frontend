@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 
 const Verify = () => {
    const { token } = useParams();
-   const { user, setUser } = useUser();
+   const { user, setUser, verificationCooldown, setVerificationCooldown } = useUser();
 
    const form = useForm<z.infer<typeof verifySchema>>({
       resolver: zodResolver(verifySchema),
@@ -40,8 +40,9 @@ const Verify = () => {
       onError(error: ApiException) {
          toast.error(error.message);
       },
-      onSuccess() {
+      onSuccess(data) {
          toast.success('Mail has been sent. Check your inbox or spam');
+         setVerificationCooldown(data.cooldown);
       }
    });
 
@@ -86,16 +87,21 @@ const Verify = () => {
                   {verifyMutation.isPending && <Loader2 className="animate-spin" />}
                   Verify
                </Button>
-               <Button
-                  type="button"
-                  variant="outline"
-                  className="w-4/12"
-                  onClick={resendHandle}
-                  disabled={verifyMutation.isPending || resendMutation.isPending}
-               >
-                  {resendMutation.isPending && <Loader2 className="animate-spin" />}
-                  Resend
-               </Button>
+               <div className="flex flex-col items-center w-full">
+                  <Button
+                     type="button"
+                     variant="outline"
+                     className="w-4/12"
+                     onClick={resendHandle}
+                     disabled={verifyMutation.isPending || resendMutation.isPending || verificationCooldown > 0}
+                  >
+                     {resendMutation.isPending && <Loader2 className="animate-spin" />}
+                     Resend
+                  </Button>
+                  {verificationCooldown > 0 && (
+                     <p className="text-sm text-gray-500">You can try again in {verificationCooldown} seconds</p>
+                  )}
+               </div>
             </form>
          </Form>
       </>

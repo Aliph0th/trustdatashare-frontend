@@ -92,7 +92,7 @@ function App() {
    const { data, isLoading } = useQuery({
       queryKey: [QUERY_KEYS.USER],
       queryFn: REQUESTS.GET_MYSELF,
-      retry: 1
+      retry: false
    });
 
    useEffect(() => {

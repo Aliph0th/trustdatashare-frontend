@@ -46,7 +46,7 @@ export const REQUESTS = {
       );
    },
    RESEND: async () => {
-      return apiCall(() => API.post('/auth/email/resend'));
+      return apiCall(() => API.post<{ cooldown: number }>('/auth/email/resend'));
    },
    CREATE_POST: async (data: z.infer<typeof createDataSchema>) => {
       return apiCall(() => API.post<{ id: string }>('/data', data));

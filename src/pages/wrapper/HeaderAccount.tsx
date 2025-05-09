@@ -29,7 +29,7 @@ const HeaderAccount = () => {
       },
       onSuccess() {
          setUser(null);
-         toast('Logged out', { icon: <LogOut size={20} /> });
+         toast.info('Logged out', { icon: <LogOut size={20} /> });
          queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
       }
    });
