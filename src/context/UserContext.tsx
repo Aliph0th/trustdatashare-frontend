@@ -1,28 +1,49 @@
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import { User } from '../types';
 import { UserContext } from './contexts';
+import { LOCAL_STORAGE_KEYS } from '../constants';
+import { getCooldownRemaining, setCooldownExpiry } from '../lib/utils';
+import { useCooldown } from '../hooks/useCooldown';
+
 export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
    const [user, setUser] = useState<User | null>();
    const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
-   const [verificationCooldown, setVerificationCooldown] = useState(0);
+   const [verificationCooldown, internalSetVerificationCooldown] = useState<number>(() =>
+      getCooldownRemaining(LOCAL_STORAGE_KEYS.VERIFICATION_COOLDOWN_EXPIRY)
+   );
+   const [forgotPasswordCooldown, internalSetForgotPasswordCooldown] = useState<number>(() =>
+      getCooldownRemaining(LOCAL_STORAGE_KEYS.FORGOT_PASSWORD_COOLDOWN_EXPIRY)
+   );
 
-   useEffect(() => {
-      if (verificationCooldown > 0) {
-         const interval = setInterval(() => {
-            if (verificationCooldown === 0) {
-               clearInterval(interval);
-               return;
-            }
-            setVerificationCooldown(prev => prev - 1);
-         }, 1000);
+   useCooldown(verificationCooldown, internalSetVerificationCooldown, LOCAL_STORAGE_KEYS.VERIFICATION_COOLDOWN_EXPIRY);
 
-         return () => clearInterval(interval);
-      }
-   }, [verificationCooldown]);
+   useCooldown(
+      forgotPasswordCooldown,
+      internalSetForgotPasswordCooldown,
+      LOCAL_STORAGE_KEYS.FORGOT_PASSWORD_COOLDOWN_EXPIRY
+   );
+
+   const setVerificationCooldown = (seconds: number) => {
+      setCooldownExpiry(LOCAL_STORAGE_KEYS.VERIFICATION_COOLDOWN_EXPIRY, seconds);
+      internalSetVerificationCooldown(seconds);
+   };
+   const setForgotPasswordCooldown = (seconds: number) => {
+      setCooldownExpiry(LOCAL_STORAGE_KEYS.FORGOT_PASSWORD_COOLDOWN_EXPIRY, seconds);
+      internalSetForgotPasswordCooldown(seconds);
+   };
 
    return (
       <UserContext.Provider
-         value={{ user, isUserLoading, setUser, setIsUserLoading, verificationCooldown, setVerificationCooldown }}
+         value={{
+            user,
+            isUserLoading,
+            setUser,
+            setIsUserLoading,
+            verificationCooldown,
+            setVerificationCooldown,
+            forgotPasswordCooldown,
+            setForgotPasswordCooldown
+         }}
       >
          {children}
       </UserContext.Provider>

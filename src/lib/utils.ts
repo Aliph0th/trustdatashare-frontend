@@ -67,6 +67,26 @@ export const formatSeconds = (seconds: number) => {
    return result.join(', ') || '0 seconds';
 };
 
+export function getCooldownRemaining(storageKey: string): number {
+   const raw = localStorage.getItem(storageKey);
+   if (raw) {
+      const expiry = parseInt(raw, 10);
+      const remaining = Math.ceil((expiry - Date.now()) / 1000);
+      if (remaining > 0) return remaining;
+      localStorage.removeItem(storageKey);
+   }
+   return 0;
+}
+
+export function setCooldownExpiry(storageKey: string, seconds: number) {
+   if (seconds > 0) {
+      const expiry = Date.now() + seconds * 1000;
+      localStorage.setItem(storageKey, expiry.toString());
+   } else {
+      localStorage.removeItem(storageKey);
+   }
+}
+
 export const fetchAvailability = async (
    field: 'username' | 'email',
    value: string,

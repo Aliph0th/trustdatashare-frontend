@@ -16,6 +16,7 @@ import Settings from './pages/settings/Settings';
 import UserPosts from './pages/UserPosts';
 import Verify from './pages/Verify';
 import Wrapper from './pages/wrapper';
+import ForgotPassword from './pages/ForgotPassword';
 
 const router = createBrowserRouter([
    {
@@ -68,6 +69,14 @@ const router = createBrowserRouter([
                      </AuthWrapper>
                   ),
                   path: 'verify/:token?'
+               },
+               {
+                  element: (
+                     <AuthWrapper to="/">
+                        <ForgotPassword />
+                     </AuthWrapper>
+                  ),
+                  path: 'forgot-password'
                },
                {
                   element: (

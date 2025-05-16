@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { REQUESTS } from '../../api';
 import { useUser } from '../../hooks/useUser';
 import { loginSchema } from '../../validation';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ApiException } from '../../exceptions';
 
 const Login = () => {
@@ -69,6 +69,11 @@ const Login = () => {
                      <FormControl>
                         <Input type="password" {...field} />
                      </FormControl>
+                     <FormDescription>
+                        <NavLink to="/forgot-password" className="text-blue-600/60 hover:text-blue-600/80">
+                           I forgot my password
+                        </NavLink>
+                     </FormDescription>
                      <FormMessage />
                   </FormItem>
                )}

@@ -85,5 +85,8 @@ export const REQUESTS = {
    },
    CHECK_CREDENTIALS: async <T extends { username?: string; email?: string }>(credentials: T) => {
       return apiCall(() => API.get<{ [K in keyof T]: T[K] }>('/users/availability', { params: credentials }));
+   },
+   RESET_PASSWORD: async (email: string) => {
+      return apiCall(() => API.post<{ cooldown: number }>('/auth/reset', { email }));
    }
 };

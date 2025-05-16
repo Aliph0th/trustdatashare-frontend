@@ -9,5 +9,7 @@ export type UserContextType = {
    setUser: Dispatch<SetStateAction<User | undefined>>;
    setIsUserLoading: Dispatch<SetStateAction<boolean>>;
    verificationCooldown: number;
-   setVerificationCooldown: Dispatch<SetStateAction<number>>;
+   setVerificationCooldown: (seconds: number) => void;
+   forgotPasswordCooldown: number;
+   setForgotPasswordCooldown: (seconds: number) => void;
 };
