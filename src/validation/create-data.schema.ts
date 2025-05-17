@@ -10,7 +10,7 @@ export const createDataSchema = z.object({
       .string()
       .trim()
       .min(1, 'Title must be at least 1 character.')
-      .max(20, 'Title must be a maximum 20 characters long.')
+      .max(100, 'Title must be a maximum 100 characters long.')
       .optional()
       .or(z.literal('')),
    description: z
