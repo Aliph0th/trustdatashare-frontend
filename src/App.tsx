@@ -17,6 +17,7 @@ import UserPosts from './pages/UserPosts';
 import Verify from './pages/Verify';
 import Wrapper from './pages/wrapper';
 import ForgotPassword from './pages/ForgotPassword';
+import SetNewPassword from './pages/SetNewPassword';
 
 const router = createBrowserRouter([
    {
@@ -77,6 +78,14 @@ const router = createBrowserRouter([
                      </AuthWrapper>
                   ),
                   path: 'forgot-password'
+               },
+               {
+                  element: (
+                     <AuthWrapper to="/">
+                        <SetNewPassword />
+                     </AuthWrapper>
+                  ),
+                  path: 'recovery/:token?'
                },
                {
                   element: (

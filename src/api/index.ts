@@ -2,7 +2,14 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { z } from 'zod';
 import { ApiException } from '../exceptions';
 import { Data, PostsResponse, PublicUser, Sessions, User } from '../types';
-import { createDataSchema, loginSchema, patchUserSchema, signupSchema, verifySchema } from '../validation';
+import {
+   createDataSchema,
+   loginSchema,
+   patchUserSchema,
+   resetPasswordSchema,
+   signupSchema,
+   verifySchema
+} from '../validation';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -88,5 +95,8 @@ export const REQUESTS = {
    },
    RESET_PASSWORD: async (email: string) => {
       return apiCall(() => API.post<{ cooldown: number }>('/auth/reset', { email }));
+   },
+   SET_NEW_PASSWORD: async (data: z.infer<typeof resetPasswordSchema>) => {
+      return apiCall(() => API.post('/auth/setup', data));
    }
 };
