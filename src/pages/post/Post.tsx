@@ -34,7 +34,7 @@ const Post = () => {
       queryFn: () => REQUESTS.GET_POST({ id, password: form.getValues().password }),
       enabled: !!id,
       retry: false,
-      staleTime: 5 * 60000
+      staleTime: 30000
    });
 
    useEffect(() => {

@@ -22,7 +22,7 @@ const UserPosts = () => {
    });
    const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
       queryKey: [QUERY_KEYS.USER_POSTS],
-      staleTime: 10000,
+      staleTime: 30000,
       queryFn: ({ pageParam }: { pageParam: number }) => REQUESTS.GET_USER_POSTS(+id, { page: pageParam }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, _, lastPageParam) => {

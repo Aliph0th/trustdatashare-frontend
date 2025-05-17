@@ -12,7 +12,7 @@ const SessionsTab = () => {
    const { data, isLoading } = useQuery({
       queryKey: [QUERY_KEYS.SESSIONS, QUERY_KEYS.USER],
       queryFn: REQUESTS.GET_SESSIONS,
-      staleTime: 10 * 60000
+      staleTime: 30000
    });
 
    const onSessionDelete = useCallback(

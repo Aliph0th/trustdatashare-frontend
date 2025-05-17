@@ -13,7 +13,6 @@ const MyPosts = () => {
    const queryClient = useQueryClient();
    const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
       queryKey: [QUERY_KEYS.POSTS],
-      staleTime: 10000,
       queryFn: ({ pageParam }: { pageParam: number }) => REQUESTS.GET_MY_POSTS({ page: pageParam }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, _, lastPageParam) => {
