@@ -1,6 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
-import Footer from './Footer';
 import { Toaster } from '@/components/ui/sonner';
 import { useUser } from '../../hooks/useUser';
 
@@ -18,7 +17,6 @@ const Wrapper = () => {
             <Outlet />
             <Toaster expand richColors theme="light" className="select-none" />
          </main>
-         <Footer />
       </div>
    );
 };
