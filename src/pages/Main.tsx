@@ -27,7 +27,7 @@ const Main = () => {
       resolver: zodResolver(createDataSchema),
       defaultValues: {
          content: '',
-         hideOwner: false
+         isOwnerHidden: false
       }
    });
 
@@ -136,7 +136,7 @@ const Main = () => {
                <div className="flex gap-4 items-center">
                   <FormField
                      control={form.control}
-                     name="hideOwner"
+                     name="isOwnerHidden"
                      render={({ field }) => (
                         <FormItem className="flex">
                            <FormLabel className={`font-normal ${user ? '' : 'text-gray-500'}`}>Hide owner</FormLabel>

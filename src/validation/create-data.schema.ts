@@ -20,7 +20,7 @@ export const createDataSchema = z.object({
       .max(500, 'Description must be a maximum 500 characters long.')
       .optional()
       .or(z.literal('')),
-   hideOwner: z.boolean().optional(),
+   isOwnerHidden: z.boolean().optional(),
    password: z.string().min(5, 'Password must be at least 5 characters.').optional().or(z.literal('')),
    ttl: z.coerce
       .number()

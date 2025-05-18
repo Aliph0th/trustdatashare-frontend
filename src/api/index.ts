@@ -66,6 +66,10 @@ export const REQUESTS = {
       const data = await apiCall(() => API.get<Data>(`/data/${id}`, { headers }));
       return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) };
    },
+   GET_POST_FOR_EDIT: async (id: string) => {
+      const data = await apiCall(() => API.get<Data>(`/data/${id}/edit`));
+      return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) };
+   },
    GET_MY_POSTS: async (params: { page?: number; limit?: number }) => {
       return apiCall(() => API.get<PostsResponse>('/data/my', { params }));
    },
@@ -98,5 +102,8 @@ export const REQUESTS = {
    },
    SET_NEW_PASSWORD: async (data: z.infer<typeof resetPasswordSchema>) => {
       return apiCall(() => API.post('/auth/setup', data));
+   },
+   PATCH_POST: async ({ id, data }: { id: string; data: Partial<z.infer<typeof createDataSchema>> }) => {
+      return await apiCall(() => API.patch(`/data/${id}`, data));
    }
 };
