@@ -70,10 +70,11 @@ export const QUERY_KEYS = {
    DATA: 'data',
    SESSIONS: 'sessions',
    POSTS: 'posts',
-   USER_POSTS: 'user_posts'
+   USER_POSTS: 'user_posts',
+   EDIT_POST: 'edit_post'
 };
 
-export const MAX_GUEST_EXPIRATION = 24 * 3600;
+export const MAX_GUEST_EXPIRATION = 2 * 24 * 3600;
 
 export const LOCAL_STORAGE_KEYS = {
    VERIFICATION_COOLDOWN_EXPIRY: 'verificationCooldownExpiry',

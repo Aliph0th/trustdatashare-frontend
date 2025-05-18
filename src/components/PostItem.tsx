@@ -74,9 +74,11 @@ const PostItem: FC<PostItemProps> = ({ post, onPostDelete, index, controls }) =>
                         <Ellipsis className="text-gray-500" size={20} />
                      </PopoverTrigger>
                      <PopoverContent className="w-fit p-3">
-                        <Button size="sm" variant="outline" className="mr-2" disabled={mutation.isPending}>
-                           <Pencil />
-                        </Button>
+                        <NavLink to={`/post/${post.id}/edit`}>
+                           <Button size="sm" variant="outline" className="mr-2" disabled={mutation.isPending}>
+                              <Pencil />
+                           </Button>
+                        </NavLink>
                         <AlertDialog>
                            <AlertDialogTrigger asChild>
                               <Button size="sm" variant="outline" disabled={mutation.isPending}>

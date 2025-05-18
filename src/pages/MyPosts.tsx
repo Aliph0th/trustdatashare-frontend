@@ -2,7 +2,7 @@ import { InfiniteScroll } from '@/components/ui/infinite-scroll';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { REQUESTS } from '../api';
 import { QUERY_KEYS } from '../constants';
 import { PostsResponse } from '../types';
@@ -26,6 +26,13 @@ const MyPosts = () => {
          pageParams: []
       }
    });
+
+   useEffect(() => {
+      return () => {
+         queryClient.resetQueries({ queryKey: [QUERY_KEYS.POSTS] });
+      };
+   }, [queryClient]);
+
    const onPostDelete = useCallback(
       (id: string, index: number) => {
          const pages = data.pages.map<PostsResponse>((page, idx) => {

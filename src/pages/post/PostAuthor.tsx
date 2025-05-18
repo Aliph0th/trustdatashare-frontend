@@ -1,14 +1,17 @@
-import { EyeOff, User, CircleUserRound } from 'lucide-react';
+import { CircleUserRound, Edit2, EyeOff, User } from 'lucide-react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Data } from '../../types';
-import { FC } from 'react';
+import { useUser } from '../../hooks/useUser';
 
 interface PostAuthorProps {
    isOwnerHidden?: boolean;
    owner?: Data['owner'];
+   id: string;
 }
 
-const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner }) => {
+const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner, id }) => {
+   const { user } = useUser();
    return (
       <p className="flex items-center gap-2.5">
          by
@@ -35,6 +38,11 @@ const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner }) => {
                </>
             )}
          </span>
+         {owner?.id === user?.id && (
+            <NavLink to={`/post/${id}/edit`}>
+               <Edit2 size={15} />
+            </NavLink>
+         )}
       </p>
    );
 };

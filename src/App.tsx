@@ -18,6 +18,7 @@ import Verify from './pages/Verify';
 import Wrapper from './pages/wrapper';
 import ForgotPassword from './pages/ForgotPassword';
 import SetNewPassword from './pages/SetNewPassword';
+import EditPost from './pages/post/EditPost';
 
 const router = createBrowserRouter([
    {
@@ -94,6 +95,14 @@ const router = createBrowserRouter([
                      </AuthWrapper>
                   ),
                   path: 'settings'
+               },
+               {
+                  element: (
+                     <AuthWrapper to="/login" isAuthRequired>
+                        <EditPost />
+                     </AuthWrapper>
+                  ),
+                  path: 'post/:id/edit'
                },
                {
                   path: '*',
