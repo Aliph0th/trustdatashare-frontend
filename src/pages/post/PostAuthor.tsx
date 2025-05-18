@@ -2,16 +2,15 @@ import { CircleUserRound, Edit2, EyeOff, User } from 'lucide-react';
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Data } from '../../types';
-import { useUser } from '../../hooks/useUser';
 
 interface PostAuthorProps {
    isOwnerHidden?: boolean;
    owner?: Data['owner'];
    id: string;
+   isYours: boolean;
 }
 
-const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner, id }) => {
-   const { user } = useUser();
+const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner, id, isYours }) => {
    return (
       <p className="flex items-center gap-2.5">
          by
@@ -20,6 +19,7 @@ const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner, id }) => {
                <>
                   <EyeOff size={20} />
                   &nbsp;Anonymous
+                  {isYours && <>&nbsp;(your post)</>}
                </>
             ) : (
                <>
@@ -38,7 +38,7 @@ const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner, id }) => {
                </>
             )}
          </span>
-         {owner?.id === user?.id && (
+         {isYours && (
             <NavLink to={`/post/${id}/edit`}>
                <Edit2 size={15} />
             </NavLink>

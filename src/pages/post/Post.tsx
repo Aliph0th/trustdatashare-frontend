@@ -104,7 +104,12 @@ const Post = () => {
                {!data?.isPublic && <Lock size={16} className="text-gray-500 inline mt-1" />}
             </h2>
             <div className="text-gray-500/90">
-               <PostAuthor isOwnerHidden={data?.isOwnerHidden} id={data.id} owner={data?.owner} />
+               <PostAuthor
+                  isOwnerHidden={data?.isOwnerHidden}
+                  isYours={data.isYours}
+                  id={data.id}
+                  owner={data?.owner}
+               />
                <p>Created at: {data.createdAt.toLocaleString('ru-RU')}</p>
                {data.createdAt.getTime() !== data.updatedAt.getTime() && (
                   <p>Edited: {data.updatedAt.toLocaleString('ru-RU')}</p>

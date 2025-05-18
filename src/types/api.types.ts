@@ -54,6 +54,7 @@ export type Data = {
    updatedAt: Date;
    isPublic?: boolean;
    isOwnerHidden?: boolean;
+   isYours: boolean;
    owner?: {
       id: number;
       username: string;
