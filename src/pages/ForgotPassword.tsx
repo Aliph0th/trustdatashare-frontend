@@ -47,7 +47,7 @@ const ForgotPassword = () => {
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                     <FormItem className="w-4/12">
+                     <FormItem className="lg:w-4/12 sm:w-8/12 w-11/12">
                         <FormLabel required>Email</FormLabel>
                         <FormControl>
                            <Input placeholder="example@example.com" {...field} />
@@ -57,7 +57,11 @@ const ForgotPassword = () => {
                      </FormItem>
                   )}
                />
-               <Button type="submit" className="w-4/12" disabled={mutation.isPending || forgotPasswordCooldown > 0}>
+               <Button
+                  type="submit"
+                  className="lg:w-4/12 sm:w-8/12 w-11/12"
+                  disabled={mutation.isPending || forgotPasswordCooldown > 0}
+               >
                   {mutation.isPending && <Loader2 className="animate-spin" />}
                   Send code
                </Button>

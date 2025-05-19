@@ -74,7 +74,7 @@ export const QUERY_KEYS = {
    EDIT_POST: 'edit_post'
 };
 
-export const MAX_GUEST_EXPIRATION = 2 * 24 * 3600;
+export const MAX_GUEST_EXPIRATION = 3 * 24 * 3600;
 
 export const LOCAL_STORAGE_KEYS = {
    VERIFICATION_COOLDOWN_EXPIRY: 'verificationCooldownExpiry',

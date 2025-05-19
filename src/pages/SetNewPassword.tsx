@@ -59,7 +59,7 @@ const SetNewPassword = () => {
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                     <FormItem className="w-4/12">
+                     <FormItem className="lg:w-4/12 sm:w-8/12 w-11/12">
                         <FormLabel required>New Password</FormLabel>
                         <FormControl>
                            <Input type="password" placeholder="Enter new password" {...field} />
@@ -73,7 +73,7 @@ const SetNewPassword = () => {
                   control={form.control}
                   name="repeatedPassword"
                   render={({ field }) => (
-                     <FormItem className="w-4/12">
+                     <FormItem className="lg:w-4/12 sm:w-8/12 w-11/12">
                         <FormLabel required>Repeat Password</FormLabel>
                         <FormControl>
                            <Input type="password" placeholder="Repeat your password" {...field} />
@@ -82,7 +82,7 @@ const SetNewPassword = () => {
                      </FormItem>
                   )}
                />
-               <Button type="submit" className="w-4/12" disabled={mutation.isPending}>
+               <Button type="submit" className="lg:w-4/12 sm:w-8/12 w-11/12" disabled={mutation.isPending}>
                   {mutation.isPending && <Loader2 className="animate-spin" />}
                   Reset Password
                </Button>

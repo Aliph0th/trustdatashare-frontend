@@ -85,7 +85,7 @@ const Main = () => {
                render={({ field }) => (
                   <FormItem className="max-sm:row-start-1">
                      <FormControl>
-                        <FloatingLabelInput label="Title" {...field} value={field.value || ''} />
+                        <FloatingLabelInput label="Title" type="text" {...field} value={field.value || ''} />
                      </FormControl>
                      <FormMessage />
                   </FormItem>

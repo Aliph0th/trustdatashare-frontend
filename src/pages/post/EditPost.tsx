@@ -129,17 +129,18 @@ const EditPost = () => {
          <h1 className="text-2xl font-semibold mb-4 text-center">Edit post</h1>
          <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="grid grid-cols-[3fr_1fr] grid-rows-[auto_1fr] gap-5 h-full"
+            className="grid sm:grid-cols-[3fr_1fr] grid-rows-[auto_1fr_auto_auto] sm:grid-rows-[auto_1fr] gap-5 h-full"
          >
             <FormField
                control={form.control}
                name="title"
                render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="max-sm:row-start-1">
                      <FormControl>
                         <FloatingLabelInput
                            label="Title"
                            {...field}
+                           type="text"
                            onChange={e => onFieldChange('title', e.target.value)}
                            value={field.value || ''}
                         />
@@ -148,7 +149,7 @@ const EditPost = () => {
                   </FormItem>
                )}
             />
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button type="submit" className="max-sm:row-start-4" disabled={mutation.isPending}>
                {mutation.isPending && <Loader2 className="animate-spin" />}
                Save Changes
             </Button>
@@ -156,7 +157,7 @@ const EditPost = () => {
                control={form.control}
                name="content"
                render={({ field }) => (
-                  <FormItem className="h-full grid-rows-[1fr_auto]">
+                  <FormItem className="h-full max-sm:row-start-2 grid-rows-[1fr_auto]">
                      <FormControl>
                         <Textarea placeholder="Content" className="h-full resize-none" {...field} />
                      </FormControl>
@@ -165,7 +166,7 @@ const EditPost = () => {
                )}
             />
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 max-sm:row-start-3">
                <FormField
                   control={form.control}
                   name="description"

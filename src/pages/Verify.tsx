@@ -74,7 +74,7 @@ const Verify = () => {
                   control={form.control}
                   name="token"
                   render={({ field }) => (
-                     <FormItem className="w-4/12">
+                     <FormItem className="lg:w-4/12 sm:w-8/12 w-11/12">
                         <FormLabel required>Code</FormLabel>
                         <FormControl>
                            <Input placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" {...field} />
@@ -83,7 +83,11 @@ const Verify = () => {
                      </FormItem>
                   )}
                />
-               <Button type="submit" className="w-4/12" disabled={verifyMutation.isPending || resendMutation.isPending}>
+               <Button
+                  type="submit"
+                  className="lg:w-4/12 sm:w-8/12 w-11/12"
+                  disabled={verifyMutation.isPending || resendMutation.isPending}
+               >
                   {verifyMutation.isPending && <Loader2 className="animate-spin" />}
                   Verify
                </Button>
@@ -91,7 +95,7 @@ const Verify = () => {
                   <Button
                      type="button"
                      variant="outline"
-                     className="w-4/12"
+                     className="lg:w-4/12 sm:w-8/12 w-11/12"
                      onClick={resendHandle}
                      disabled={verifyMutation.isPending || resendMutation.isPending || verificationCooldown > 0}
                   >

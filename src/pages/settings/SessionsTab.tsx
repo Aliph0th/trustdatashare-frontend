@@ -46,7 +46,7 @@ const SessionsTab = () => {
             <div className="mt-4">
                <p className="text-gray-800">Other sessions</p>
                {data?.sessions?.length ? (
-                  <div>
+                  <div className="flex flex-col gap-2">
                      {data.sessions.map(session => (
                         <Session key={session.sid} session={session} onSessionDelete={onSessionDelete} deletable />
                      ))}
