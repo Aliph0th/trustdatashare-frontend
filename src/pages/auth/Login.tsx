@@ -50,7 +50,7 @@ const Login = () => {
                control={form.control}
                name="login"
                render={({ field }) => (
-                  <FormItem className="w-4/12">
+                  <FormItem className="lg:w-4/12 sm:w-8/12 w-11/12">
                      <FormLabel required>Login</FormLabel>
                      <FormControl>
                         <Input placeholder="John Smith" {...field} />
@@ -64,7 +64,7 @@ const Login = () => {
                control={form.control}
                name="password"
                render={({ field }) => (
-                  <FormItem className="w-4/12">
+                  <FormItem className="lg:w-4/12 sm:w-8/12 w-11/12">
                      <FormLabel required>Password</FormLabel>
                      <FormControl>
                         <Input type="password" {...field} />
@@ -78,7 +78,7 @@ const Login = () => {
                   </FormItem>
                )}
             />
-            <Button type="submit" className="w-4/12" disabled={mutation.isPending}>
+            <Button type="submit" className="lg:w-4/12 sm:w-8/12 w-11/12" disabled={mutation.isPending}>
                {mutation.isPending && <Loader2 className="animate-spin" />}
                Login
             </Button>
