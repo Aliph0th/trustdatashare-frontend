@@ -62,8 +62,7 @@ const ChangeAvatar: FC<ChangeAvatarProps> = ({ user, setUser }) => {
       <CardHeader className="flex justify-between">
          <div className="flex flex-col gap-2">
             <Avatar className="pointer-events-none select-none w-[100px] h-[100px]">
-               {preview && !user.avatar && <AvatarImage src={preview} />}
-               {!preview && <AvatarImage src={user.avatar} />}
+               <AvatarImage src={preview || user?.avatar} className="w-full h-full" />
                <AvatarFallback className="bg-linear-to-t text-3xl from-cyan-500 to-blue-500">
                   {titleInitials(user.username || '')}
                </AvatarFallback>
