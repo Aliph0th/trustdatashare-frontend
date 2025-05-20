@@ -53,7 +53,7 @@ const UserPosts = () => {
    }
    return (
       <>
-         <div className="flex px-10 gap-2 items-center mb-4">
+         <div className="flex sm:px-10 px-3 gap-2 items-center mb-4">
             <Avatar className="pointer-events-none select-none w-[50px] h-[50px]">
                <AvatarImage src={user.avatar} />
                <AvatarFallback className="bg-linear-to-t text-2xl from-cyan-500 to-blue-500">
@@ -62,7 +62,7 @@ const UserPosts = () => {
             </Avatar>
             <p className="text-lg font-semibold">{user.username}</p>
          </div>
-         <ScrollArea className="w-full px-10">
+         <ScrollArea className="w-full sm:px-10 px-3">
             <div className="flex w-full flex-col items-center gap-3">
                {data.pages?.length === 1 && data.pages?.[0]?.data?.length === 0 ? (
                   <p className="text-gray-500 text-center">No visible posts found.</p>

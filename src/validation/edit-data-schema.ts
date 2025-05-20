@@ -5,7 +5,7 @@ export const editDataSchema = z.object({
       .string()
       .trim()
       .min(1, 'Content cannot be empty.')
-      .max(6291456, 'Content must be a maximum of 6291456 characters long.'),
+      .max(32768, 'Content must be a maximum of 32768 characters long.'),
    title: z
       .union([z.literal(null), z.string().trim().max(100, 'Title must be a maximum of 100 characters long.')])
       .optional(),

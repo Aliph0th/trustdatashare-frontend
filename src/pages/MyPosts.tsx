@@ -58,8 +58,8 @@ const MyPosts = () => {
    }
    return (
       <>
-         <p className="px-10 text-2xl mb-4 font-semibold">Your posts</p>
-         <ScrollArea className="w-full px-10">
+         <p className="sm:px-10 px-2 text-2xl mb-4 font-semibold">Your posts</p>
+         <ScrollArea className="w-full sm:px-10 px-2">
             <div className="flex w-full flex-col items-center gap-3">
                {data.pages.map((page, index) =>
                   page.data.map(post => (
