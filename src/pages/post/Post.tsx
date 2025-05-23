@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import { Loader2, Lock } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { z } from 'zod';
 import { REQUESTS } from '../../api';
 import { QUERY_KEYS } from '../../constants';
@@ -28,6 +28,7 @@ const Post = () => {
       }
    });
    const [expiration, setExpiration] = useState(-1);
+   const [firstPasswordAttempt, setFirstPasswordAttempt] = useState(true);
 
    const { data, isLoading, refetch, error } = useQuery<Data, ApiException>({
       queryKey: [QUERY_KEYS.DATA, id],
@@ -56,6 +57,7 @@ const Post = () => {
 
    function onSubmit() {
       refetch();
+      setFirstPasswordAttempt(false);
    }
    if (isLoading) {
       return (
@@ -65,7 +67,9 @@ const Post = () => {
       );
    }
    if (error?.code === 401) {
-      toast.error(error.message);
+      if (!firstPasswordAttempt) {
+         toast.error(error.message);
+      }
       return (
          <>
             <span className="text-center text-lg mb-3 font-semibold">Confirm the password to access to this post</span>
@@ -95,6 +99,10 @@ const Post = () => {
    }
    if (error?.code === 404) {
       return <NotFound />;
+   }
+   if (error?.code === 400) {
+      toast.error(error.message);
+      return <Navigate to="/" />;
    }
    return (
       <div className="flex flex-col gap-5">

@@ -68,7 +68,14 @@ const ChangeAvatar: FC<ChangeAvatarProps> = ({ user, setUser }) => {
                </AvatarFallback>
             </Avatar>
             <form onSubmit={submitHandle} className="flex gap-2 items-center">
-               <Input type="file" name="file" ref={hiddenInputRef} onChange={inputChangeHandle} hidden />
+               <Input
+                  type="file"
+                  name="file"
+                  ref={hiddenInputRef}
+                  accept=".jpeg, .jpg, .png"
+                  onChange={inputChangeHandle}
+                  hidden
+               />
                <Button variant="outline" disabled={!!preview} type="button" onClick={changeHandle}>
                   <Upload /> Change
                </Button>

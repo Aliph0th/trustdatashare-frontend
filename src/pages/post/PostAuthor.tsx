@@ -24,7 +24,10 @@ const PostAuthor: FC<PostAuthorProps> = ({ isOwnerHidden, owner, id, isYours }) 
             ) : (
                <>
                   {owner ? (
-                     <NavLink to={`/user/${owner.id}`} className="hover:underline flex items-center">
+                     <NavLink
+                        to={`/user/${owner.id}`}
+                        className="underline decoration-dashed cursor-pointer flex items-center"
+                     >
                         <User size={20} />
                         &nbsp;
                         {owner.username}

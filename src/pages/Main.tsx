@@ -63,7 +63,8 @@ const Main = () => {
    });
 
    function onSubmit(data: z.infer<typeof createDataSchema>) {
-      mutation.mutate(data);
+      const filteredData = Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== ''));
+      mutation.mutate(filteredData);
    }
 
    if (isUserLoading) {
@@ -192,7 +193,7 @@ const Main = () => {
                         </div>
                         {!user && (
                            <FormDescription>
-                              Your post will be automatically deleted after 1 day (or less) if you don't log in
+                              Your post will be automatically deleted after 3 days (or less if set) if you don't log in
                            </FormDescription>
                         )}
                         <FormMessage />
